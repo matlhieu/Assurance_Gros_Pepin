@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Assurance Gros Pépin</title>
 </head>
 <body>
+    <h2>Bienvenue sur le site de votre Assurance Gros Pépin</h2>
 
 </body>
 </html>
