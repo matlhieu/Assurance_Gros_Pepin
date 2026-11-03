@@ -36,3 +36,42 @@ CREATE TABLE type_garanties (
     FOREIGN KEY (id_type) REFERENCES types_assurance(id_type) ON DELETE CASCADE,
     FOREIGN KEY (id_garantie) REFERENCES garanties(id_garantie) ON DELETE CASCADE
 );
+
+CREATE TABLE contrats (
+    id_contrat INT AUTO_INCREMENT PRIMARY KEY,
+    numero_contrat VARCHAR(50) NOT NULL UNIQUE,
+    date_debut DATE NOT NULL,
+    date_fin DATE NOT NULL,
+    prime DECIMAL(10, 2) NOT NULL,
+    statut VARCHAR(20) NOT NULL, -- plusieurs status : EN_ATTENTE, ACTIF, SUSPENDU, EXPIRE, RESILIE
+    id_utilisateur INT NOT NULL,
+    id_type INT NOT NULL,
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id_utilisateur),
+    FOREIGN KEY (id_type) REFERENCES types_assurance(id_type)
+);
+
+CREATE TABLE contrat_garanties (
+    id_contrat INT NOT NULL,
+    id_garantie INT NOT NULL,
+    PRIMARY KEY (id_contrat, id_garantie),
+    FOREIGN KEY (id_contrat) REFERENCES contrats(id_contrat) ON DELETE CASCADE,
+    FOREIGN KEY (id_garantie) REFERENCES garanties(id_garantie) ON DELETE CASCADE
+);
+
+CREATE TABLE sinistres (
+    id_sinistre INT AUTO_INCREMENT PRIMARY KEY,
+    numero_sinistre VARCHAR(50) NOT NULL UNIQUE,
+    date_declaration DATE NOT NULL,
+    description TEXT,
+    montant_estime DECIMAL(10, 2) NOT NULL,
+    type_sinistre VARCHAR(50),
+    statut VARCHAR(20) NOT NULL, -- plusieurs états : DECLARE, EN_ANALYSE, ACCEPTE, REFUSE, INDEMNISE
+    montant_indemnise DECIMAL(10, 2),
+    commentaire_agent TEXT,
+    id_contrat INT NOT NULL,
+    FOREIGN KEY (id_contrat) REFERENCES contrats(id_contrat)
+);
+
+CREATE TABLE piece_jointes (
+    id_fichier INT AUTO_INCREMENT PRIMARY KEY,
+)
