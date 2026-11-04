@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.entete {
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    background: #ACDDE7;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    height: 60px; 
+    width: auto;   
+    display: block;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
