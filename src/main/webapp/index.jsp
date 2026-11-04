@@ -10,7 +10,7 @@
 <body>
     <header class="entete">
 	    <a href="${pageContext.request.contextPath}/index.jsp">
-	        <img src="${pageContext.request.contextPath}/image/logo.jpg" alt="Logo Assurance" class="logo">
+	        <img src="${pageContext.request.contextPath}/image/logo.png" alt="Logo Assurance" class="logo">
 	    </a>
 	</header>
 
