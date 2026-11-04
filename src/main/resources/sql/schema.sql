@@ -73,5 +73,19 @@ CREATE TABLE sinistres (
 );
 
 CREATE TABLE piece_jointes (
-    id_fichier INT AUTO_INCREMENT PRIMARY KEY,
-)
+    id_piece INT AUTO_INCREMENT PRIMARY KEY,
+    nom_fichier VARCHAR(255) NOT NULL,
+    chemin_fichier VARCHAR(255) NOT NULL,
+    id_sinistre INT NOT NULL,
+    FOREIGN KEY (id_sinistre) REFERENCES sinistres(id_sinistre) ON DELETE CASCADE
+);
+
+CREATE TABLE paiements (
+    id_paiement INT AUTO_INCREMENT PRIMARY KEY,
+    montant DECIMAL(10, 2) NOT NULL,
+    date_paiement DATE NOT NULL,
+    mode_paiement VARCHAR(30) NOT NULL, -- 3 types : CARTE, VIREMENT, PRELEVEMENT
+    statut VARCHAR(20) NOT NULL, -- EN_ATTENTE, EFFECTUE, ECHOUE
+    id_contrat INT NOT NULL,
+    FOREIGN KEY (id_contrat) REFERENCES contrats(id_contrat)
+);
