@@ -5,9 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Assurance Gros Pépin</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-    <h2>Bienvenue sur le site de votre Assurance Gros Pépin</h2>
+    <header class="entete">
+	    <a href="${pageContext.request.contextPath}/index.jsp">
+	        <img src="${pageContext.request.contextPath}/image/logo.jpg" alt="Logo Assurance" class="logo">
+	    </a>
+	</header>
 
 </body>
+<%@ include file="/WEB-INF/header.jspf" %>
 </html>
