@@ -5,24 +5,19 @@
 
 <hibernate-configuration>
     <session-factory>
+        <!-- settings jdbc -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/assurance_db?useSSL=false&amp;serverTimezone=UTC</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.password"></property>
 
+        <!-- dialect hibernate 6 le gere automatiquement -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
-        <property name="hibernate.hbm2ddl.auto">update</property>
-
-        <mapping class="fr.cytech.assurance.model.Utilisateur"/>
-        <mapping class="fr.cytech.assurance.model.TypeAssurance"/>
-        <mapping class="fr.cytech.assurance.model.Garantie"/>
-        <mapping class="fr.cytech.assurance.model.Contrat"/>
-        <mapping class="fr.cytech.assurance.model.Sinistre"/>
-        <mapping class="fr.cytech.assurance.model.PieceJointe"/>
-        <mapping class="fr.cytech.assurance.model.Paiement"/>
+        <!-- validate verifie juste que la bdd colle sans tout casser -->
+        <property name="hibernate.hbm2ddl.auto">validate</property>
     </session-factory>
 </hibernate-configuration>
