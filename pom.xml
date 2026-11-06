@@ -19,6 +19,8 @@
         <hibernate.version>6.6.13.Final</hibernate.version>
         <mysql.version>8.3.0</mysql.version>
         <junit.version>5.13.2</junit.version>
+        <jakarta.version>11.0.0</jakarta.version>
+        <hibernate.version>6.5.2.Final</hibernate.version>
     </properties>
 
     <dependencies>
