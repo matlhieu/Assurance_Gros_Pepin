@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS pieces_jointes;
 DROP TABLE IF EXISTS sinistres;
 DROP TABLE IF EXISTS contrat_garanties;
 DROP TABLE IF EXISTS contrats;
+DROP TABLE IF EXISTS type_garanties;
 DROP TABLE IF EXISTS garanties;
 DROP TABLE IF EXISTS types_assurance;
 DROP TABLE IF EXISTS utilisateurs;
@@ -72,7 +73,7 @@ CREATE TABLE sinistres (
     FOREIGN KEY (id_contrat) REFERENCES contrats(id_contrat)
 );
 
-CREATE TABLE piece_jointes (
+CREATE TABLE pieces_jointes (
     id_piece INT AUTO_INCREMENT PRIMARY KEY,
     nom_fichier VARCHAR(255) NOT NULL,
     chemin_fichier VARCHAR(255) NOT NULL,
