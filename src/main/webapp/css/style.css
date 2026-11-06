@@ -1,5 +1,23 @@
 @charset "UTF-8";
 
+/* ===== Palette ===== */
+:root {
+    --aqua: #9AD5CA;        /* Pearl Aqua */
+    --bleu: #ACDDE7;        /* Frosted Blue : en-tête */
+    --pervenche: #ADB9E3;   /* Periwinkle */
+    --lavande: #A379C9;     /* Bright Lavender */
+    --orchidee: #B744B8;    /* Vivid Orchid : actions principales */
+
+    --orchidee-fonce: #8E2F8F;  /* survol, liens (lisible sur fond clair) */
+    --fond: #F3FAFC;            /* fond de page, bleu très pâle */
+    --encre: #2A2340;           /* texte */
+    --encre-douce: #5C5670;
+    --bord: #CFD6EE;
+
+    --police-titre: "Fredoka", "Trebuchet MS", "Segoe UI", sans-serif;
+    --police-texte: "Nunito Sans", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -7,22 +25,322 @@
 body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    font-family: var(--police-texte);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--encre);
+    background: var(--fond);
 }
 
+a {
+    color: var(--orchidee-fonce);
+}
+
+:focus-visible {
+    outline: 3px solid var(--lavande);
+    outline-offset: 2px;
+}
+
+/* ===== En-tête ===== */
 .entete {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     padding: 8px 24px;
-    background: #ACDDE7;
+    background: var(--bleu);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+.entete-marque {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--encre);
+}
+
 .logo {
-    height: 60px; 
-    width: auto;   
+    height: 60px;
+    width: auto;
     display: block;
 }
 
-.logo:hover {
+.entete-marque:hover .logo {
     opacity: 0.8;
+}
+
+.entete-nom {
+    font-family: var(--police-titre);
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+/* Boutons Connexion / Inscription en haut à droite (style « Espace personnel ») */
+.entete-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-entete {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 2px solid var(--encre);
+    border-radius: 6px;
+    font-family: var(--police-texte);
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.icone {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+/* Connexion : contour */
+.btn-contour {
+    color: var(--encre);
+    background: #fff;
+}
+
+.btn-contour:hover {
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--encre);
+}
+
+/* Inscription : plein */
+.btn-plein {
+    color: #fff;
+    background: var(--orchidee);
+    border-color: var(--orchidee);
+}
+
+.btn-plein:hover {
+    background: var(--orchidee-fonce);
+    border-color: var(--orchidee-fonce);
+}
+
+/* ===== Page d'accueil ===== */
+.accueil {
+    display: grid;
+    grid-template-columns: 1.1fr minmax(320px, 420px);
+    align-items: center;
+    gap: 64px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 24px;
+}
+
+.accueil-titre {
+    font-family: var(--police-titre);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+    max-width: 12ch;
+}
+
+.accueil-intro {
+    font-size: 1.125rem;
+    color: var(--encre-douce);
+    max-width: 46ch;
+    margin: 0 0 28px;
+}
+
+.accueil-atouts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+}
+
+.accueil-atouts li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+}
+
+/* petit pépin en guise de puce */
+.pepin {
+    flex: none;
+    width: 10px;
+    height: 14px;
+    background: var(--lavande);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+/* ===== Carte de connexion ===== */
+.carte-connexion {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(42, 35, 64, 0.14);
+    scroll-margin-top: 24px;
+}
+
+.carte-chair {
+    padding: 36px 32px 28px;
+}
+
+/* bande du bas : les 5 couleurs de la palette */
+.carte-ecorce {
+    height: 14px;
+    background: linear-gradient(to right,
+        var(--aqua) 0 20%,
+        var(--bleu) 20% 40%,
+        var(--pervenche) 40% 60%,
+        var(--lavande) 60% 80%,
+        var(--orchidee) 80% 100%);
+}
+
+.carte-titre {
+    font-family: var(--police-titre);
+    font-weight: 600;
+    font-size: 1.75rem;
+    margin: 0 0 4px;
+}
+
+.carte-sous-titre {
+    margin: 0 0 24px;
+    color: var(--encre-douce);
+    font-size: 0.95rem;
+}
+
+.formulaire {
+    display: grid;
+    gap: 18px;
+}
+
+.champ {
+    display: grid;
+    gap: 6px;
+}
+
+.champ label {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.champ input {
+    width: 100%;
+    padding: 12px 14px;
+    font: inherit;
+    color: var(--encre);
+    background: #fff;
+    border: 2px solid var(--bord);
+    border-radius: 10px;
+    transition: border-color 0.15s;
+}
+
+.champ input:hover {
+    border-color: var(--pervenche);
+}
+
+.champ input:focus {
+    outline: none;
+    border-color: var(--lavande);
+    box-shadow: 0 0 0 3px rgba(163, 121, 201, 0.25);
+}
+
+.btn-principal {
+    margin-top: 6px;
+    padding: 14px;
+    font-family: var(--police-titre);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #fff;
+    background: var(--orchidee);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn-principal:hover {
+    background: var(--orchidee-fonce);
+}
+
+.btn-principal:active {
+    transform: translateY(1px);
+}
+
+.carte-bas {
+    margin: 24px 0 0;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--encre-douce);
+}
+
+.carte-bas a {
+    font-weight: 700;
+}
+
+/* ===== Messages ===== */
+.alerte {
+    margin: 0 0 18px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #F7E8F7;
+    color: var(--orchidee-fonce);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-left: 4px solid var(--orchidee);
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 820px) {
+    .accueil {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 36px 20px;
+    }
+
+    .accueil-titre {
+        max-width: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .entete {
+        padding: 8px 14px;
+    }
+
+    .entete-nom {
+        display: none;
+    }
+
+    .logo {
+        height: 48px;
+    }
+
+    .btn-entete {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    .entete-actions {
+        gap: 8px;
+    }
+
+    .carte-chair {
+        padding: 28px 20px 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
 }
