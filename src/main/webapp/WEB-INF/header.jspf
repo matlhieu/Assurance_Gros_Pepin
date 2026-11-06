@@ -1,0 +1,24 @@
+<%@ page pageEncoding="UTF-8" %>
+<header class="entete">
+    <a href="${pageContext.request.contextPath}/index.jsp" class="entete-marque">
+        <img src="${pageContext.request.contextPath}/image/logo.png" alt="" class="logo">
+        <span class="entete-nom">Gros Pépin</span>
+    </a>
+    <nav class="entete-actions">
+        <a href="${pageContext.request.contextPath}/index.jsp#connexion" class="btn-entete btn-contour">
+            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/>
+            </svg>
+            Connexion
+        </a>
+        <a href="${pageContext.request.contextPath}/inscription" class="btn-entete btn-plein">
+            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10" cy="8" r="4"/>
+                <path d="M2 21c0-4 3.6-6.5 8-6.5 1.6 0 3 .3 4.2.9"/>
+                <path d="M19 14v6M16 17h6"/>
+            </svg>
+            Inscription
+        </a>
+    </nav>
+</header>
