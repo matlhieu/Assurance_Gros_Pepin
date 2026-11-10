@@ -1,25 +1,46 @@
 package fr.grouped.projet_assurance.model;
 
+import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "paiements")
 public class Paiement {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_paiement")
     private int idPaiement;
-    private double montant;
+
+    @Column(name = "montant", nullable = false)
+    private BigDecimal montant;
+
+    @Column(name = "date_paiement", nullable = false)
     private LocalDate datePaiement;
+
+    @Column(name = "mode_paiement", nullable = false)
     private String modePaiement;
+
+    @Column(name = "statut", nullable = false)
     private String statut;
+
+    @Column(name = "id_contrat", nullable = false)
     private int idContrat;
 
     public Paiement() {
     }
 
-    public Paiement(double montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
+    public Paiement(BigDecimal montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
         this.montant = montant;
         this.datePaiement = datePaiement;
         this.modePaiement = modePaiement;
         this.statut = statut;
         this.idContrat = idContrat;
+    }
+
+    public Paiement(double montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
+        this(BigDecimal.valueOf(montant), datePaiement, modePaiement, statut, idContrat);
     }
 
     public int getIdPaiement() {
@@ -30,11 +51,11 @@ public class Paiement {
         this.idPaiement = idPaiement;
     }
 
-    public double getMontant() {
+    public BigDecimal getMontant() {
         return montant;
     }
 
-    public void setMontant(double montant) {
+    public void setMontant(BigDecimal montant) {
         this.montant = montant;
     }
 
