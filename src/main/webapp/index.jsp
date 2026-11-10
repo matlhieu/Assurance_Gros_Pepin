@@ -57,6 +57,7 @@
                     <a href="${pageContext.request.contextPath}/inscription">Créer un compte</a>
                 </p>
             </div>
+            
             <div class="carte-ecorce"></div>
         </section>
     </main>
