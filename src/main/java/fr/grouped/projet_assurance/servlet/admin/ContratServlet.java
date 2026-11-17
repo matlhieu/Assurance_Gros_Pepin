@@ -17,6 +17,12 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import fr.grouped.projet_assurance.dao.GarantieDAO;
+import fr.grouped.projet_assurance.dao.impl.GarantieDAOImpl;
+import fr.grouped.projet_assurance.model.Garantie;
+import java.util.ArrayList;
+
+
 
 @WebServlet("/admin/contrats")
 public class ContratServlet extends HttpServlet {
@@ -28,6 +34,7 @@ public class ContratServlet extends HttpServlet {
     public void init() throws ServletException {
         contratDAO = new ContratDAOImpl();
         typeAssuranceDAO = new TypeAssuranceDAOImpl();
+        garantieDAO = new GarantieDAOImpl();
     }
 
     @Override
@@ -47,6 +54,9 @@ public class ContratServlet extends HttpServlet {
             case "form":
                 // On charge les types d'assurance pour le menu déroulant du formulaire
                 request.setAttribute("typesAssurance", typeAssuranceDAO.findAll());
+                
+                // On charge TOUTES les garanties pour les cases à cocher
+                request.setAttribute("toutesLesGaranties", garantieDAO.findAll()); 
                 
                 String idParam = request.getParameter("id");
                 if (idParam != null) {
@@ -102,9 +112,21 @@ public class ContratServlet extends HttpServlet {
             TypeAssurance type = typeAssuranceDAO.findById(Long.parseLong(idTypeStr));
             contrat.setTypeAssurance(type);
             
-            // Note : L'association avec le Client (Utilisateur) sera ajoutée plus tard 
-            // quand Axel aura terminé la classe Utilisateur et son DAO.
+            // Récupérer les garanties cochées dans le formulaire
+            String[] garantiesIds = request.getParameterValues("garanties");
+            List<Garantie> garantiesChoisies = new ArrayList<>();
 
+            if (garantiesIds != null) {
+                for (String gId : garantiesIds) {
+                    Garantie g = garantieDAO.findById(Long.parseLong(gId));
+                    if (g != null) {
+                        garantiesChoisies.add(g);
+                    }
+                }
+            }
+            contrat.setGaranties(garantiesChoisies);
+
+            // Enregistrer ou mettre à jour
             if (contrat.getIdContrat() == null) {
                 contratDAO.save(contrat);
             } else {

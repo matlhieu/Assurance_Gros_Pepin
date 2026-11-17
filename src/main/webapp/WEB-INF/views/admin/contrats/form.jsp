@@ -65,6 +65,22 @@
         </div>
         <br>
 
+        <!-- BLOC DES GARANTIES À AJOUTER ICI -->
+        <div>
+            <label><strong>Garanties associées à ce contrat :</strong></label><br>
+            <c:forEach var="g" items="${toutesLesGaranties}">
+                <input type="checkbox" name="garanties" value="${g.idGarantie}" 
+                    <c:if test="${not empty contrat.garanties}">
+                        <c:forEach var="garantieContrat" items="${contrat.garanties}">
+                            <c:if test="${garantieContrat.idGarantie == g.idGarantie}">checked</c:if>
+                        </c:forEach>
+                    </c:if>
+                > ${g.nom} <br>
+            </c:forEach>
+        </div>
+        <br>
+        <!-- FIN DU BLOC DES GARANTIES -->
+
         <div>
             <button type="submit">Enregistrer</button>
             <a href="${pageContext.request.contextPath}/admin/contrats?action=list">Annuler</a>
