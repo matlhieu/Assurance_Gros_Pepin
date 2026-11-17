@@ -9,11 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/admin/dashboard")
-public class DashboardServlet {
+@WebServlet(name = "DashboardServlet", urlPatterns = {"/admin/dashboard", "/admin/dahsboard"})
+public class DashboardServlet extends HttpServlet {
     private StatsDao statsDao = new StatsDao();
 
-
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         double totalRevenue = statsDao.getTotalRevenue();
         double pendingPayments = statsDao.getTotalPendingPayments();

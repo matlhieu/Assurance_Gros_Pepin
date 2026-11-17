@@ -1,6 +1,7 @@
 package fr.grouped.projet_assurance.dao;
 
 import fr.grouped.projet_assurance.dao.impl.PaiementDao;
+import fr.grouped.projet_assurance.dao.impl.StatsDao;
 import fr.grouped.projet_assurance.model.Paiement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -49,5 +50,13 @@ public class PaiementDaoTest {
         // 4. Nettoyage (suppression)
         dao.delete(updated.getIdPaiement());
         Assertions.assertNull(dao.findById(updated.getIdPaiement()));
+    }
+
+    @Test
+    public void testStatsDao() {
+        StatsDao statsDao = new StatsDao();
+        double rev = statsDao.getTotalRevenue();
+        double pending = statsDao.getTotalPendingPayments();
+        System.out.println("Revenue: " + rev + ", Pending: " + pending);
     }
 }

@@ -3,28 +3,29 @@ package fr.grouped.projet_assurance.dao.impl;
 import fr.grouped.projet_assurance.util.HibernateUtil;
 import org.hibernate.Session;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class StatsDao {
 
     public double getTotalRevenue() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Double total = session.createQuery(
-                "SELECT SUM(p.montant) FROM Paiement p WHERE p.statut = 'EFFECTUE'",
-                Double.class
-        ).uniqueResult();
-        session.close();
-        return total == null ? 0.0 : total;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            BigDecimal total = session.createQuery(
+                    "SELECT SUM(p.montant) FROM Paiement p WHERE p.statut = 'EFFECTUE'",
+                    BigDecimal.class
+            ).uniqueResult();
+            return total == null ? 0.0 : total.doubleValue();
+        }
     }
 
     public double getTotalPendingPayments() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Double total = session.createQuery(
-                "SELECT SUM(p.montant) FROM Paiement p WHERE p.statut = 'EN_ATTENTE'",
-                Double.class
-        ).uniqueResult();
-        session.close();
-        return total == null ? 0.0 : total;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            BigDecimal total = session.createQuery(
+                    "SELECT SUM(p.montant) FROM Paiement p WHERE p.statut = 'EN_ATTENTE'",
+                    BigDecimal.class
+            ).uniqueResult();
+            return total == null ? 0.0 : total.doubleValue();
+        }
     }
 
     // need Sinistre entity
