@@ -13,7 +13,7 @@ import java.io.IOException;
 public class DashboardServlet {
     private StatsDao statsDao = new StatsDao();
 
-    @Override
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         double totalRevenue = statsDao.getTotalRevenue();
         double pendingPayments = statsDao.getTotalPendingPayments();
