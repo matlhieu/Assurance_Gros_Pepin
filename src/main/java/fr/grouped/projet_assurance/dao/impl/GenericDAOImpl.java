@@ -65,6 +65,10 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
         }
     }
 
+    /**
+     * Find all entities of the type T.
+     * @return A list of all entities.
+     */
     @Override
     public List<T> findAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
