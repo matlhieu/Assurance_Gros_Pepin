@@ -1,28 +1,606 @@
 @charset "UTF-8";
 
+/* =========================================================
+   Palette
+   #9AD5CA  Pearl Aqua
+   #ACDDE7  Frosted Blue
+   #ADB9E3  Periwinkle
+   #A379C9  Bright Lavender
+   #B744B8  Vivid Orchid  (couleur principale)
+   ========================================================= */
+:root {
+    --aqua: #9AD5CA;
+    --bleu: #ACDDE7;
+    --pervenche: #ADB9E3;
+    --lavande: #A379C9;
+    --orchidee: #B744B8;
+    --orchidee-fonce: #8E2F8F;
+
+    --texte: #1F1B2E;
+    --texte-doux: #5A566B;
+    --gris-fond: #F6F6F8;
+    --bordure: #E3E3EA;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Nunito Sans", "Segoe UI", Arial, sans-serif;
+    color: var(--texte);
+    background: #fff;
 }
 
-.entete {
+main {
+    flex: 1;
+}
+
+a {
+    color: inherit;
+}
+
+svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* =========================================================
+   En-tête
+   ========================================================= */
+.entete-haut {
+    display: flex;
+    align-items: stretch;
+    height: 88px;
+    padding-left: 32px;
+    background: #fff;
+    border-bottom: 1px solid var(--bordure);
+}
+
+.marque {
     display: flex;
     align-items: center;
-    padding: 8px 24px;
-    background: #ACDDE7;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    text-decoration: none;
 }
 
 .logo {
-    height: 60px; 
-    width: auto;   
-    display: block;
+    height: 52px;
+    width: auto;
 }
 
-.logo:hover {
-    opacity: 0.8;
+.marque-nom {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--orchidee);
+}
+
+.espaces {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-left: 48px;
+}
+
+.espaces a {
+    padding: 6px 4px;
+    font-size: 1.05rem;
+    text-decoration: none;
+}
+
+.espaces a:hover {
+    color: var(--orchidee);
+}
+
+/* espace sélectionné : crochets comme sur le modèle */
+.espaces a.actif {
+    color: var(--orchidee);
+    padding: 6px 12px;
+    border: 1px solid var(--orchidee);
+    border-width: 1px 0;
+}
+
+.actions {
+    display: flex;
+    margin-left: auto;
+}
+
+.bonjour {
+    align-self: center;
+    margin: 0 24px 0 auto;
+    font-size: 1.05rem;
+}
+
+.bonjour + .actions {
+    margin-left: 0;
+}
+
+.action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 116px;
+    font-size: 0.92rem;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    border-left: 1px solid var(--bordure);
+    transition: background 0.15s;
+}
+
+.action svg {
+    width: 26px;
+    height: 26px;
+    color: var(--orchidee);
+}
+
+.action:hover {
+    background: var(--gris-fond);
+}
+
+.action-principale {
+    color: #fff;
+    background: var(--orchidee);
+    border-left: none;
+}
+
+.action-principale svg {
+    color: #fff;
+}
+
+.action-principale:hover {
+    background: var(--orchidee-fonce);
+}
+
+/* deuxième ligne */
+.entete-bas {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    height: 64px;
+    padding: 0 32px;
+    background: var(--gris-fond);
+    border-bottom: 1px solid var(--bordure);
+}
+
+.entete-bas a {
+    font-size: 1.05rem;
+    text-decoration: none;
+    padding: 20px 0;
+    border-bottom: 3px solid transparent;
+}
+
+.entete-bas a:hover {
+    border-bottom-color: var(--lavande);
+}
+
+.accueil-icone {
+    color: var(--orchidee);
+    border-bottom-color: var(--orchidee) !important;
+}
+
+.accueil-icone svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+}
+
+/* =========================================================
+   Page d'accueil
+   ========================================================= */
+.accueil {
+    position: relative;
+    overflow: hidden;
+    padding: 64px 32px 80px;
+}
+
+.accueil-contenu {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.accueil-titre {
+    max-width: 900px;
+    margin: 0 0 48px;
+    font-size: 2.8rem;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+.accueil-titre strong {
+    font-weight: 800;
+    color: var(--orchidee);
+}
+
+/* formes décoratives à droite */
+.deco span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.deco-1 {
+    right: -10%;
+    width: 55%;
+    background: linear-gradient(160deg, var(--pervenche), var(--lavande));
+    clip-path: polygon(45% 0, 70% 0, 100% 100%, 10% 100%);
+    opacity: 0.85;
+}
+
+.deco-2 {
+    right: -5%;
+    width: 40%;
+    background: linear-gradient(180deg, var(--aqua), var(--bleu));
+    clip-path: polygon(60% 0, 80% 0, 100% 100%, 40% 100%);
+    opacity: 0.7;
+}
+
+.deco-logo {
+    position: absolute;
+    right: 9%;
+    bottom: 70px;
+    width: 260px;
+    transform: rotate(-8deg);
+    filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.2));
+}
+
+/* bloc des offres */
+.bloc-offres {
+    width: 920px;
+    max-width: 100%;
+    padding: 28px;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(31, 27, 46, 0.12);
+}
+
+.bloc-offres h2 {
+    margin: 0 0 24px;
+    font-size: 1.9rem;
+    font-weight: 400;
+}
+
+.bloc-offres h2 strong {
+    font-weight: 800;
+}
+
+.grille-offres {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.offre {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-height: 190px;
+    padding: 22px;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+}
+
+.offre svg {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 8px;
+    color: var(--orchidee);
+}
+
+.offre strong {
+    font-size: 1.2rem;
+}
+
+.offre-desc {
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+}
+
+.offre-prix {
+    margin-top: auto;
+    padding-top: 10px;
+    font-size: 0.95rem;
+}
+
+.offre-prix b {
+    font-size: 1.3rem;
+    color: var(--orchidee);
+}
+
+/* tuile « Un sinistre ? » */
+.offre-mise-en-avant {
+    justify-content: center;
+    background: #F7EAF7;
+    border-color: #F7EAF7;
+    transition: background 0.15s;
+}
+
+.offre-mise-en-avant:hover {
+    background: #F0D9F0;
+}
+
+.offre-mise-en-avant .fleche {
+    width: 34px;
+    height: 34px;
+    margin: 8px 0 0;
+}
+
+/* =========================================================
+   Page de connexion
+   ========================================================= */
+.login {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    min-height: 620px;
+}
+
+.login-visuel {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 40px;
+    background: var(--gris-fond);
+}
+
+.bulle {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.bulle-1 {
+    width: 360px;
+    height: 360px;
+    top: -90px;
+    left: -110px;
+    background: var(--bleu);
+}
+
+.bulle-2 {
+    width: 260px;
+    height: 260px;
+    bottom: -60px;
+    right: -70px;
+    background: var(--pervenche);
+}
+
+.bulle-3 {
+    width: 120px;
+    height: 120px;
+    bottom: 120px;
+    left: 40px;
+    background: var(--aqua);
+}
+
+.login-visuel-logo {
+    position: relative;
+    width: 240px;
+    filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.18));
+}
+
+.login-visuel p {
+    position: relative;
+    max-width: 300px;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.login-formulaire {
+    width: 100%;
+    max-width: 470px;
+    margin: 0 auto;
+    padding: 56px 24px;
+}
+
+.login-logo {
+    height: 64px;
+    margin-bottom: 36px;
+}
+
+.login-titre {
+    margin: 0 0 36px;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* petit trait sous le titre */
+.login-titre::after {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 4px;
+    margin-top: 12px;
+    background: var(--orchidee);
+}
+
+.login-formulaire form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-formulaire label {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.login-formulaire input[type="email"],
+.login-formulaire input[type="password"] {
+    height: 56px;
+    margin-bottom: 22px;
+    padding: 0 14px;
+    font: inherit;
+    font-size: 1.05rem;
+    border: 1px solid #8C8898;
+    border-radius: 4px;
+}
+
+.login-formulaire input[type="email"]:focus,
+.login-formulaire input[type="password"]:focus {
+    outline: none;
+    border-color: var(--texte);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--texte);
+}
+
+.lien-petit {
+    align-self: flex-start;
+    margin: -12px 0 30px;
+    color: var(--texte-doux);
+    font-size: 0.95rem;
+}
+
+.bouton-valider {
+    height: 56px;
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: var(--orchidee);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.bouton-valider:hover {
+    background: var(--orchidee-fonce);
+}
+
+.lien-fleche {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 28px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.lien-fleche svg {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    stroke-width: 2.2;
+    color: var(--orchidee);
+}
+
+.lien-fleche:hover {
+    color: var(--orchidee);
+}
+
+.erreur {
+    margin: -16px 0 24px;
+    padding: 12px 14px;
+    color: #9B1C2C;
+    background: #FBE9EC;
+    border-left: 4px solid #C62839;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   Pied de page
+   ========================================================= */
+.pied {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 32px;
+    color: var(--texte-doux);
+    font-size: 0.95rem;
+    border-top: 1px solid var(--bordure);
+}
+
+.pied nav {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pied nav a {
+    padding: 0 12px;
+    text-decoration: none;
+    border-left: 1px solid var(--pervenche);
+}
+
+.pied nav a:first-child {
+    border-left: none;
+}
+
+.pied nav a:hover {
+    color: var(--orchidee);
+}
+
+/* =========================================================
+   Écrans plus petits
+   ========================================================= */
+@media (max-width: 1100px) {
+    .bonjour,
+    .espaces,
+    .deco {
+        display: none;
+    }
+
+    .entete-bas {
+        gap: 24px;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 800px) {
+    .entete-haut {
+        padding-left: 16px;
+        height: 72px;
+    }
+
+    .marque-nom {
+        display: none;
+    }
+
+    .action {
+        width: 78px;
+        font-size: 0.75rem;
+    }
+
+    .action span br {
+        display: none;
+    }
+
+    .accueil {
+        padding: 36px 16px;
+    }
+
+    .accueil-titre {
+        font-size: 2rem;
+    }
+
+    .grille-offres {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .login {
+        grid-template-columns: 1fr;
+    }
+
+    .login-visuel {
+        display: none;
+    }
 }
