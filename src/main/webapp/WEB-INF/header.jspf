@@ -1,24 +1,50 @@
 <%@ page pageEncoding="UTF-8" %>
+<%-- En-tête commun, inclus dans chaque page avec <%@ include file="/WEB-INF/header.jspf" %> --%>
 <header class="entete">
-    <a href="${pageContext.request.contextPath}/index.jsp" class="entete-marque">
-        <img src="${pageContext.request.contextPath}/image/logo.png" alt="" class="logo">
-        <span class="entete-nom">Gros Pépin</span>
-    </a>
-    <nav class="entete-actions">
-        <a href="${pageContext.request.contextPath}/index.jsp#connexion" class="btn-entete btn-contour">
-            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="8" r="4"/>
-                <path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/>
-            </svg>
-            Connexion
+
+    <!-- Ligne 1 : logo, espaces, boutons d'action -->
+    <div class="entete-haut">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="marque">
+            <img src="${pageContext.request.contextPath}/image/logo.png" alt="Accueil Gros Pépin" class="logo">
+            <span class="marque-nom">Gros Pépin</span>
         </a>
-        <a href="${pageContext.request.contextPath}/inscription" class="btn-entete btn-plein">
-            <svg class="icone" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="10" cy="8" r="4"/>
-                <path d="M2 21c0-4 3.6-6.5 8-6.5 1.6 0 3 .3 4.2.9"/>
-                <path d="M19 14v6M16 17h6"/>
-            </svg>
-            Inscription
+
+        <nav class="espaces">
+            <a href="${pageContext.request.contextPath}/index.jsp" class="actif">Particuliers</a>
+            <a href="#">Professionnels</a>
+            <a href="#">Nos agences</a>
+        </nav>
+
+        <div class="actions">
+            <a href="#" class="action">
+                <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>
+                <span>Assistant</span>
+            </a>
+            <a href="#" class="action">
+                <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                <span>Déclarer un<br>sinistre</span>
+            </a>
+            <a href="${pageContext.request.contextPath}/inscription" class="action">
+                <svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3.1-6.5 7-6.5 1.4 0 2.7.3 3.8.9M18 14v6M15 17h6"/></svg>
+                <span>Inscription</span>
+            </a>
+            <a href="${pageContext.request.contextPath}/login" class="action action-principale">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                <span>Espace<br>personnel</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Ligne 2 : les types d'assurance -->
+    <nav class="entete-bas">
+        <a href="${pageContext.request.contextPath}/index.jsp" class="accueil-icone" title="Accueil">
+            <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
         </a>
+        <a href="#">Automobile</a>
+        <a href="#">Habitation</a>
+        <a href="#">Santé</a>
+        <a href="#">Voyage</a>
+        <a href="#">Professionnelle</a>
+        <a href="#">Conseils et infos</a>
     </nav>
 </header>
