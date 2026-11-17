@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// Servlet pour l'espace agent (consultation et enregistrement d'encaissements)
 @WebServlet(name = "PaiementAgentServlet", urlPatterns = {"/agent/paiements", "/agents/paiements"})
 public class PaiementAgentServlet extends HttpServlet {
 
@@ -27,7 +26,6 @@ public class PaiementAgentServlet extends HttpServlet {
 
         List<Paiement> tousLesPaiements;
 
-        // Filtrage optionnel par contrat
         String idContratStr = request.getParameter("idContrat");
         if (idContratStr != null && !idContratStr.trim().isEmpty()) {
             try {
@@ -57,7 +55,6 @@ public class PaiementAgentServlet extends HttpServlet {
             }
         }
 
-        // Récupération d'un message flash de succès (stocké en session lors d'un redirect)
         HttpSession session = request.getSession();
         String messageSucces = (String) session.getAttribute("messageSucces");
         if (messageSucces != null) {
@@ -82,7 +79,7 @@ public class PaiementAgentServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-        // Cas 1 : validation directe d'une échéance existante (action encaisser)
+        // validation directe d'une échéance existante (action encaisser)
         if ("encaisser".equalsIgnoreCase(action)) {
             String idPaiementStr = request.getParameter("idPaiement");
             if (idPaiementStr != null && !idPaiementStr.trim().isEmpty()) {
@@ -109,7 +106,7 @@ public class PaiementAgentServlet extends HttpServlet {
             return;
         }
 
-        // Cas 2 : enregistrement d'un nouvel encaissement
+        //enregistrement d'un nouvel encaissement
         String idContratStr = request.getParameter("idContrat");
         String montantStr = request.getParameter("montant");
         String datePaiementStr = request.getParameter("datePaiement");
@@ -121,7 +118,6 @@ public class PaiementAgentServlet extends HttpServlet {
         BigDecimal montant = null;
         LocalDate datePaiement = null;
 
-        // 1. Contrôle du contrat
         if (idContratStr == null || idContratStr.trim().isEmpty()) {
             erreur = "Veuillez renseigner le numéro du contrat.";
         } else {
@@ -135,7 +131,6 @@ public class PaiementAgentServlet extends HttpServlet {
             }
         }
 
-        // 2. Contrôle du montant
         if (erreur == null) {
             if (montantStr == null || montantStr.trim().isEmpty()) {
                 erreur = "Veuillez renseigner le montant à encaisser.";
@@ -151,14 +146,12 @@ public class PaiementAgentServlet extends HttpServlet {
             }
         }
 
-        // 3. Contrôle du mode de paiement
         if (erreur == null) {
             if (modePaiement == null || modePaiement.trim().isEmpty()) {
                 erreur = "Veuillez sélectionner un mode de paiement.";
             }
         }
 
-        // 4. Contrôle de la date
         if (erreur == null) {
             if (datePaiementStr != null && !datePaiementStr.trim().isEmpty()) {
                 try {
@@ -171,12 +164,10 @@ public class PaiementAgentServlet extends HttpServlet {
             }
         }
 
-        // 5. Statut par défaut
         if (statut == null || statut.trim().isEmpty()) {
             statut = "EFFECTUE";
         }
 
-        // S'il y a une erreur de saisie, on conserve les données saisies et on réaffiche le formulaire
         if (erreur != null) {
             request.setAttribute("messageErreur", erreur);
             request.setAttribute("saisieIdContrat", idContratStr);
@@ -186,7 +177,6 @@ public class PaiementAgentServlet extends HttpServlet {
             request.setAttribute("saisieStatut", statut);
             doGet(request, response);
         } else {
-            // Création et persistance en base
             Paiement nouveauPaiement = new Paiement(montant, datePaiement, modePaiement, statut, idContrat);
             paiementDao.save(nouveauPaiement);
 
