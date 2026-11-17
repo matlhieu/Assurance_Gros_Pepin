@@ -112,6 +112,16 @@ svg {
     margin-left: auto;
 }
 
+.bonjour {
+    align-self: center;
+    margin: 0 24px 0 auto;
+    font-size: 1.05rem;
+}
+
+.bonjour + .actions {
+    margin-left: 0;
+}
+
 .action {
     display: flex;
     flex-direction: column;
@@ -273,50 +283,59 @@ svg {
 .offre {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    min-height: 160px;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.1rem;
+    align-items: flex-start;
+    gap: 6px;
+    min-height: 190px;
+    padding: 22px;
     text-decoration: none;
     background: #fff;
     border: 1px solid var(--bordure);
     border-radius: 10px;
-    transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .offre svg {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 8px;
     color: var(--orchidee);
 }
 
-.offre:hover {
-    border-color: var(--orchidee);
-    box-shadow: 0 4px 14px rgba(183, 68, 184, 0.18);
-}
-
-.offre-mise-en-avant {
-    background: #F7EAF7;
-    border-color: #F7EAF7;
-    gap: 8px;
-}
-
-.offre-mise-en-avant strong {
+.offre strong {
     font-size: 1.2rem;
 }
 
-.offre-mise-en-avant span {
-    font-size: 0.98rem;
+.offre-desc {
+    font-size: 0.95rem;
     color: var(--texte-doux);
+}
+
+.offre-prix {
+    margin-top: auto;
+    padding-top: 10px;
+    font-size: 0.95rem;
+}
+
+.offre-prix b {
+    font-size: 1.3rem;
+    color: var(--orchidee);
+}
+
+/* tuile « Un sinistre ? » */
+.offre-mise-en-avant {
+    justify-content: center;
+    background: #F7EAF7;
+    border-color: #F7EAF7;
+    transition: background 0.15s;
+}
+
+.offre-mise-en-avant:hover {
+    background: #F0D9F0;
 }
 
 .offre-mise-en-avant .fleche {
     width: 34px;
     height: 34px;
-    margin-top: 6px;
+    margin: 8px 0 0;
 }
 
 /* =========================================================
@@ -534,6 +553,7 @@ svg {
    Écrans plus petits
    ========================================================= */
 @media (max-width: 1100px) {
+    .bonjour,
     .espaces,
     .deco {
         display: none;

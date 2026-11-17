@@ -1,50 +1,93 @@
 <%@ page pageEncoding="UTF-8" %>
-<%-- En-tête commun, inclus dans chaque page avec <%@ include file="/WEB-INF/header.jspf" %> --%>
+<%-- En-tête commun, inclus dans chaque page avec <%@ include file="/WEB-INF/header.jspf" %>
+     Les boutons affichés dépendent du rôle mis en session par LoginServlet. --%>
+<% String roleConnecte = (String) session.getAttribute("role"); %>
 <header class="entete">
 
-    <!-- Ligne 1 : logo, espaces, boutons d'action -->
+    <!-- Ligne 1 : logo + boutons d'action -->
     <div class="entete-haut">
         <a href="${pageContext.request.contextPath}/index.jsp" class="marque">
             <img src="${pageContext.request.contextPath}/image/logo.png" alt="Accueil Gros Pépin" class="logo">
             <span class="marque-nom">Gros Pépin</span>
         </a>
 
-        <nav class="espaces">
-            <a href="${pageContext.request.contextPath}/index.jsp" class="actif">Particuliers</a>
-            <a href="#">Professionnels</a>
-            <a href="#">Nos agences</a>
-        </nav>
+        <% if (roleConnecte != null) { %>
+            <p class="bonjour">Bonjour <strong>${utilisateur.prenom}</strong></p>
+        <% } %>
 
         <div class="actions">
-            <a href="#" class="action">
-                <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>
-                <span>Assistant</span>
-            </a>
-            <a href="#" class="action">
-                <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-                <span>Déclarer un<br>sinistre</span>
-            </a>
-            <a href="${pageContext.request.contextPath}/inscription" class="action">
-                <svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3.1-6.5 7-6.5 1.4 0 2.7.3 3.8.9M18 14v6M15 17h6"/></svg>
-                <span>Inscription</span>
-            </a>
-            <a href="${pageContext.request.contextPath}/login" class="action action-principale">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-                <span>Espace<br>personnel</span>
-            </a>
+            <% if (roleConnecte == null) { %>
+                <%-- Visiteur non connecté --%>
+                <a href="${pageContext.request.contextPath}/login" class="action">
+                    <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                    <span>Déclarer un<br>sinistre</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/inscription" class="action">
+                    <svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3.1-6.5 7-6.5 1.4 0 2.7.3 3.8.9M18 14v6M15 17h6"/></svg>
+                    <span>Inscription</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/login" class="action action-principale">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                    <span>Espace<br>personnel</span>
+                </a>
+            <% } else { %>
+                <%-- Utilisateur connecté --%>
+                <% if (roleConnecte.equals("CLIENT")) { %>
+                    <a href="${pageContext.request.contextPath}/client/sinistres/declarer" class="action">
+                        <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+                        <span>Déclarer un<br>sinistre</span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/client/profil" class="action">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                        <span>Mon profil</span>
+                    </a>
+                <% } %>
+                <a href="${pageContext.request.contextPath}/logout" class="action action-principale">
+                    <svg viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></svg>
+                    <span>Déconnexion</span>
+                </a>
+            <% } %>
         </div>
     </div>
 
-    <!-- Ligne 2 : les types d'assurance -->
+    <!-- Ligne 2 : navigation selon le rôle -->
     <nav class="entete-bas">
-        <a href="${pageContext.request.contextPath}/index.jsp" class="accueil-icone" title="Accueil">
-            <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
-        </a>
-        <a href="#">Automobile</a>
-        <a href="#">Habitation</a>
-        <a href="#">Santé</a>
-        <a href="#">Voyage</a>
-        <a href="#">Professionnelle</a>
-        <a href="#">Conseils et infos</a>
+        <% if (roleConnecte == null) { %>
+            <a href="${pageContext.request.contextPath}/index.jsp" class="accueil-icone" title="Accueil">
+                <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
+            </a>
+            <a href="${pageContext.request.contextPath}/index.jsp#offres">Nos assurances</a>
+
+        <% } else if (roleConnecte.equals("CLIENT")) { %>
+            <a href="${pageContext.request.contextPath}/client/dashboard" class="accueil-icone" title="Mon espace">
+                <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
+            </a>
+            <a href="${pageContext.request.contextPath}/client/contrats">Mes contrats</a>
+            <a href="${pageContext.request.contextPath}/client/garanties">Mes garanties</a>
+            <a href="${pageContext.request.contextPath}/client/paiements">Mes paiements</a>
+            <a href="${pageContext.request.contextPath}/client/sinistres">Mes sinistres</a>
+            <a href="${pageContext.request.contextPath}/client/assistant">Assistant IA</a>
+
+        <% } else if (roleConnecte.equals("AGENT")) { %>
+            <a href="${pageContext.request.contextPath}/agent/dashboard" class="accueil-icone" title="Tableau de bord">
+                <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
+            </a>
+            <a href="${pageContext.request.contextPath}/agent/clients">Clients</a>
+            <a href="${pageContext.request.contextPath}/agent/contrats">Contrats</a>
+            <a href="${pageContext.request.contextPath}/agent/sinistres">Sinistres</a>
+            <a href="${pageContext.request.contextPath}/agent/garanties">Garanties</a>
+            <a href="${pageContext.request.contextPath}/agent/paiements">Paiements</a>
+            <a href="${pageContext.request.contextPath}/agent/statistiques">Statistiques</a>
+
+        <% } else if (roleConnecte.equals("ADMIN")) { %>
+            <a href="${pageContext.request.contextPath}/admin/dashboard" class="accueil-icone" title="Tableau de bord">
+                <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
+            </a>
+            <a href="${pageContext.request.contextPath}/admin/utilisateurs">Utilisateurs</a>
+            <a href="${pageContext.request.contextPath}/admin/types">Types d'assurance</a>
+            <a href="${pageContext.request.contextPath}/admin/contrats">Contrats</a>
+            <a href="${pageContext.request.contextPath}/admin/sinistres">Sinistres</a>
+            <a href="${pageContext.request.contextPath}/admin/statistiques">Statistiques</a>
+        <% } %>
     </nav>
 </header>
