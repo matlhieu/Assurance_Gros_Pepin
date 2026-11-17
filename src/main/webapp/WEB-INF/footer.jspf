@@ -1,0 +1,11 @@
+<%@ page pageEncoding="UTF-8" %>
+<footer class="pied">
+    <span>© 2026 Assurance Gros Pépin – Projet JEE CY Tech</span>
+    <nav>
+        <a href="#">Mentions légales</a>
+        <a href="#">Données personnelles</a>
+        <a href="#">Cookies</a>
+        <a href="#">Plan du site</a>
+        <a href="#">Contact</a>
+    </nav>
+</footer>
