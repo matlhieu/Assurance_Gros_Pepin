@@ -21,7 +21,6 @@ public class DashboardServlet extends HttpServlet {
         req.setAttribute("totalRevenue", totalRevenue);
         req.setAttribute("pendingPayments", pendingPayments);
 
-
         //need Contrats & Sinistre entities
         // req.setAttribute("totalIndemnities", statsDao.getTotalIndemnities());
         // req.setAttribute("contractsByStatus", statsDao.getContractsByStatus());
