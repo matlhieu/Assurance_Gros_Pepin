@@ -15,13 +15,12 @@
     <div class="auth-card">
         <h2>Connexion</h2>
 
-        <%-- Message flash (après inscription réussie) --%>
         <c:if test="${not empty sessionScope.flashSuccess}">
             <div class="alert alert-success">${sessionScope.flashSuccess}</div>
             <c:remove var="flashSuccess" scope="session" />
         </c:if>
 
-        <%-- Message d'erreur (après POST échoué) --%>
+     
         <c:if test="${not empty erreur}">
             <div class="alert alert-danger">${erreur}</div>
         </c:if>
