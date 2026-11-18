@@ -45,11 +45,11 @@ public class Sinistre {
     private Contrat contrat;
 
     @OneToMany(mappedBy = "sinistre", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PieceJointe> piecesJointes = new ArrayList<>(); // Initialisé pour éviter le NullPointerException
+    private List<PieceJointe> piecesJointes = new ArrayList<>(); 
 
     // --- GETTERS ET SETTERS ---
     
-    public Integer getIdSinistre() { // Typo corrigée (I majuscule)
+    public Integer getIdSinistre() { 
         return idSinistre;
     }
 
@@ -132,7 +132,7 @@ public class Sinistre {
         this.commentaireAgent = commentaireAgent;
     }
 
-    // --- GETTERS ET SETTERS POUR LES RELATIONS (INDISPENSABLES) ---
+    // --- GETTERS ET SETTERS POUR LES RELATIONS  ---
     
     public Contrat getContrat() {
         return contrat;

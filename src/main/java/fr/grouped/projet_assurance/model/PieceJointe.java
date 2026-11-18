@@ -1,10 +1,6 @@
 package fr.grouped.projet_assurance.model;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "pieces_jointes") 

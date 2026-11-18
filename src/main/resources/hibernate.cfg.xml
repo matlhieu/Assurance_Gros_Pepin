@@ -6,7 +6,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/assurance_db?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="hibernate.connection.url">
+        jdbc:mysql://localhost:3306/assurance_db?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true
+        </property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
 
@@ -17,9 +19,10 @@
 
         <property name="hibernate.hbm2ddl.auto">validate</property>
 
+        <!-- TOUTES LES CLASSES DOIVENT ÊTRE DÉCOMMENTÉES -->
         <mapping class="fr.grouped.projet_assurance.model.Utilisateur"/>
-        <mapping class="fr.grouped.projet_assurance.model.TypeAssurance"/>
-        <mapping class="fr.grouped.projet_assurance.model.Garantie"/>
+        <!--<mapping class="fr.grouped.projet_assurance.model.TypeAssurance"/>-->
+        <!-- <mapping class="fr.grouped.projet_assurance.model.Garantie"/>-->
         <mapping class="fr.grouped.projet_assurance.model.Contrat"/>
         <mapping class="fr.grouped.projet_assurance.model.Sinistre"/>
         <mapping class="fr.grouped.projet_assurance.model.PieceJointe"/>
