@@ -43,6 +43,8 @@ INSERT INTO sinistres (numero_sinistre, date_declaration, description, montant_e
 
 INSERT INTO paiements (montant, date_paiement, mode_paiement, statut, id_contrat) VALUES
 (350.00, '2026-01-05', 'CARTE', 'EFFECTUE', 1),
-(200.00, '2026-02-20', 'VIREMENT', 'EFFECTUE', 2);
+(200.00, '2026-02-20', 'VIREMENT', 'EFFECTUE', 2),
+(350.00, '2026-07-01', 'PRELEVEMENT', 'EN_ATTENTE', 1),
+(200.00, '2026-08-15', 'VIREMENT', 'EN_ATTENTE', 2);
 
 
