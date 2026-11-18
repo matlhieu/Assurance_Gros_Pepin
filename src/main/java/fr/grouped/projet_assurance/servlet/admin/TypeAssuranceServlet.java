@@ -42,14 +42,14 @@ public class TypeAssuranceServlet extends HttpServlet {
                 
                 String idParam = request.getParameter("id");
                 if (idParam != null) {
-                    TypeAssurance type = typeDAO.findById(Long.parseLong(idParam));
+                    TypeAssurance type = typeDAO.findById(Integer.parseInt(idParam));
                     request.setAttribute("type", type);
                 }
                 request.getRequestDispatcher("/WEB-INF/views/types/form.jsp").forward(request, response);
                 break;
                 
             case "delete":
-                Long id = Long.parseLong(request.getParameter("id"));
+                Integer id = Integer.parseInt(request.getParameter("id"));
                 typeDAO.delete(id);
                 response.sendRedirect(request.getContextPath() + "/types?action=list");
                 break;
@@ -73,7 +73,7 @@ public class TypeAssuranceServlet extends HttpServlet {
             // 2. Création de l'objet
             TypeAssurance type = new TypeAssurance();
             if (idParam != null && !idParam.isEmpty()) {
-                type.setIdTypeAssurance(Long.parseLong(idParam));
+                type.setIdTypeAssurance(Integer.parseInt(idParam));
             }
             type.setNom(nom);
             type.setDescription(description);

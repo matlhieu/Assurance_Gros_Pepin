@@ -39,14 +39,14 @@ public class GarantieServlet extends HttpServlet {
             case "form":
                 String idParam = request.getParameter("id");
                 if (idParam != null) {
-                    Garantie garantie = garantieDAO.findById(Long.parseLong(idParam));
+                    Garantie garantie = garantieDAO.findById(Integer.parseInt(idParam));
                     request.setAttribute("garantie", garantie);
                 }
                 request.getRequestDispatcher("/WEB-INF/views/admin/garanties/form.jsp").forward(request, response);
                 break;
                 
             case "delete":
-                Long id = Long.parseLong(request.getParameter("id"));
+                Integer id = Integer.parseInt(request.getParameter("id"));
                 garantieDAO.delete(id);
                 response.sendRedirect(request.getContextPath() + "/admin/garanties?action=list");
                 break;
@@ -67,7 +67,7 @@ public class GarantieServlet extends HttpServlet {
 
             Garantie garantie = new Garantie();
             if (idParam != null && !idParam.isEmpty()) {
-                garantie.setIdGarantie(Long.parseLong(idParam));
+                garantie.setIdGarantie(Integer.parseInt(idParam));
             }
             garantie.setNom(nom);
             garantie.setDescription(description);

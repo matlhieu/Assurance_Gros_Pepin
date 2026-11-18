@@ -9,14 +9,14 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class ContratDAOImpl extends GenericDAOImpl<Contrat, Long> implements ContratDAO {
+public class ContratDAOImpl extends GenericDAOImpl<Contrat, Integer> implements ContratDAO {
 
     public ContratDAOImpl() {
         super(Contrat.class);
     }
 
     @Override
-    public List<Contrat> findByClient(Long idClient) {
+    public List<Contrat> findByClient(Integer idClient) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Contrat> query = session.createQuery(
                 "FROM Contrat c WHERE c.client.idUtilisateur = :idClient", Contrat.class);

@@ -18,8 +18,8 @@ class SocleTest {
     @Test
     void utilisateursDuSeedSontLisibles() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Long count = session
-                .createQuery("select count(u) from Utilisateur u", Long.class)
+            Integer count = session
+                .createQuery("select count(u) from Utilisateur u", Integer.class)
                 .uniqueResult();
             assertNotNull(count);
             assertTrue(count > 0, "Le seed.sql doit contenir au moins 1 utilisateur");

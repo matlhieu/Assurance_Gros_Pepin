@@ -9,7 +9,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class GarantieDAOImpl
-        extends GenericDAOImpl<Garantie, Long>
+        extends GenericDAOImpl<Garantie, Integer>
         implements GarantieDAO {
 
     public GarantieDAOImpl() {
