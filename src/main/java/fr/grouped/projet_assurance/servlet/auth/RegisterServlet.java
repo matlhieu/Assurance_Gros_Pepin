@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/register")
+@WebServlet("/inscription")
 public class RegisterServlet extends HttpServlet {
 
     private final AuthService authService = new AuthService();
