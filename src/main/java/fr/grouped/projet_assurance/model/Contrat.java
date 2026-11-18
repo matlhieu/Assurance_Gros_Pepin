@@ -1,6 +1,6 @@
-package com.assurance.model;
 
-import com.assurance.model.enums.StatutContrat;
+package fr.grouped.projet_assurance.model;
+import fr.grouped.projet_assurance.model.enums.StatutContrat;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;

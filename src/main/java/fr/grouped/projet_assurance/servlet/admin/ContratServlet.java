@@ -8,11 +8,12 @@ import fr.grouped.projet_assurance.model.Contrat;
 import fr.grouped.projet_assurance.model.TypeAssurance;
 import fr.grouped.projet_assurance.model.enums.StatutContrat;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,11 +30,13 @@ public class ContratServlet extends HttpServlet {
 
     private ContratDAO contratDAO;
     private TypeAssuranceDAO typeAssuranceDAO;
+     private GarantieDAO garantieDAO;
 
     @Override
     public void init() throws ServletException {
         contratDAO = new ContratDAOImpl();
         typeAssuranceDAO = new TypeAssuranceDAOImpl();
+        garantieDAO = new GarantieDAOImpl();
         garantieDAO = new GarantieDAOImpl();
     }
 

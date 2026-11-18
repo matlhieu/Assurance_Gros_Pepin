@@ -1,4 +1,5 @@
-package model;
+
+package fr.grouped.projet_assurance.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

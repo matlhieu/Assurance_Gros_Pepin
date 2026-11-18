@@ -1,4 +1,5 @@
-package com.assurance.model;
+
+package fr.grouped.projet_assurance.model;
 
 public class Garantie {
 

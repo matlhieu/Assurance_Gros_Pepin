@@ -1,3 +1,5 @@
+package fr.grouped.projet_assurance.model.enums;
+
 public enum StatutContrat {
     EN_ATTENTE("En attente"),
     ACTIF("Actif"),
