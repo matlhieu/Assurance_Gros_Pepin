@@ -1,4 +1,4 @@
-package fr.grouped.projet_assurance.servlet;
+package fr.grouped.projet_assurance.servlet.admin;
 
 import fr.grouped.projet_assurance.dao.TypeAssuranceDAO;
 import fr.grouped.projet_assurance.dao.impl.TypeAssuranceDAOImpl;

@@ -1,4 +1,4 @@
-package fr.grouped.projet_assurance.test;
+package fr.grouped.projet_assurance;
 
 import fr.grouped.projet_assurance.dao.TypeAssuranceDAO;
 import fr.grouped.projet_assurance.dao.GarantieDAO;
