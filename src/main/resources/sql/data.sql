@@ -1,6 +1,6 @@
 -- utilisateurs :
 INSERT INTO utilisateurs (email, mot_de_passe, nom, prenom, role) VALUES
-('projetadmin@assurance.fr', 'admin123', 'Chef', 'Admin', 'ADMIN'),
+('admin@assurance.fr', 'admin123', 'Admin', 'Chef', 'ADMIN'),
 ('agent@assurance.fr','agent123','Bond','James','AGENT'),
 ('robbstark@gmail.com','KingInTheNorth','Stark','Robb','CLIENT'),
 ('daenerys@gmail.com','Dracaris','Targaryen','Daenerys','CLIENT');
