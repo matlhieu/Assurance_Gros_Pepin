@@ -30,7 +30,7 @@ public class ContratActionServlet extends HttpServlet {
         String idParam = request.getParameter("id");
 
         if (idParam != null && action != null) {
-            Long id = Long.parseLong(idParam);
+            Integer id = Integer.parseInt(idParam);
             Contrat contrat = contratDAO.findById(id);
 
             if (contrat != null) {
