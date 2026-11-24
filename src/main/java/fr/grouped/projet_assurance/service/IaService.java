@@ -14,7 +14,7 @@ import java.util.Map;
 public class IaService {
 
     // API Key placeholder as requested
-    private static final String API_KEY = "YOUR_GEMINI_API_KEY";
+    private static final String API_KEY = "AQ.Ab8RN6LdWgl_EQMJl0p10YJuA8QSAoKCA8dE2lQ907Lcfse-kA";
     private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + API_KEY;
 
     private final HttpClient httpClient = HttpClient.newBuilder()
