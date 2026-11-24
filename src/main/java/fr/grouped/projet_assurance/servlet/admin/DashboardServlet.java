@@ -1,6 +1,7 @@
 package fr.grouped.projet_assurance.servlet.admin;
 
-import fr.grouped.projet_assurance.dao.impl.StatsDao;
+import fr.grouped.projet_assurance.dao.StatsDAO;
+import fr.grouped.projet_assurance.dao.impl.StatsDAOImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,26 +10,18 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/admin/dashboard", "/admin/dahsboard"})
+@WebServlet("/admin/dashboard")
 public class DashboardServlet extends HttpServlet {
-    private StatsDao statsDao = new StatsDao();
+
+    private final StatsDAO statsDAO = new StatsDAOImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        double totalRevenue = statsDao.getTotalRevenue();
-        double pendingPayments = statsDao.getTotalPendingPayments();
-
-        req.setAttribute("totalRevenue", totalRevenue);
-        req.setAttribute("pendingPayments", pendingPayments);
-
-        //need Contrats & Sinistre entities
-        // req.setAttribute("totalIndemnities", statsDao.getTotalIndemnities());
-        // req.setAttribute("contractsByStatus", statsDao.getContractsByStatus());
-        // req.setAttribute("clientsByType", statsDao.getClientsByInsuranceType());
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("totalRevenue", statsDAO.getTotalRevenue());
+        req.setAttribute("pendingPayments", statsDAO.getTotalPendingPayments());
+        req.setAttribute("totalIndemnities", statsDAO.getTotalIndemnities());
+        req.setAttribute("contractsByStatus", statsDAO.getContractsByStatus());
 
         req.getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(req, resp);
     }
-
-
-
 }

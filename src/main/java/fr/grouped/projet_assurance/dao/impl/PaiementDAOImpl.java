@@ -11,15 +11,12 @@ import fr.grouped.projet_assurance.util.HibernateUtil;
 public class PaiementDAOImpl extends GenericDAOImpl<Paiement, Integer> implements PaiementDAO {
 
     public PaiementDAOImpl() {
-        
         super(Paiement.class);
     }
 
     @Override
     public List<Paiement> findByContrat(Integer contratId) {
-    
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-        
             return session.createQuery(
                 "FROM Paiement p WHERE p.contrat.idContrat = :cid ORDER BY p.datePaiement DESC", 
                 Paiement.class)
@@ -29,10 +26,31 @@ public class PaiementDAOImpl extends GenericDAOImpl<Paiement, Integer> implement
     }
 
     @Override
+    public List<Paiement> findByClientId(Integer clientId) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                "FROM Paiement p WHERE p.contrat.utilisateur.idUtilisateur = :cid ORDER BY p.datePaiement DESC",
+                Paiement.class)
+                .setParameter("cid", clientId)
+                .getResultList();
+        }
+    }
+
+    @Override
     public List<Paiement> findEnAttente() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery(
                 "FROM Paiement p WHERE p.statut = 'EN_ATTENTE' ORDER BY p.datePaiement ASC", 
+                Paiement.class)
+                .getResultList();
+        }
+    }
+
+    @Override
+    public List<Paiement> findAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                "FROM Paiement p ORDER BY p.datePaiement DESC", 
                 Paiement.class)
                 .getResultList();
         }

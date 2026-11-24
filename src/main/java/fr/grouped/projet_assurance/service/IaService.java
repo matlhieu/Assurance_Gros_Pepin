@@ -7,22 +7,33 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
 public class IaService {
 
-    private static final String API_KEY = "AQ.Ab8RN6LdWgl_EQMJl0p10YJuA8QSAoKCA8dE2lQ907Lcfse-kA";
+    // API Key placeholder as requested
+    private static final String API_KEY = "YOUR_GEMINI_API_KEY";
     private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + API_KEY;
 
+    private final HttpClient httpClient = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(10))
+            .build();
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    // Call Gemini API passing client context and question
     public String askAssistant(String userQuestion, String clientContext) {
+        if (userQuestion == null || userQuestion.trim().isEmpty()) {
+            return "Veuillez poser une question.";
+        }
+
         try {
-            String fullPrompt = "Tu es l'assistant virtuel d'une compagnie d'assurance. "
-                    + "Reponds de maniere claire et courte en te basant sur les infos du client.\n"
-                    + "Infos client : " + clientContext + "\n"
+            String fullPrompt = "Tu es l'assistant virtuel d'une compagnie d'assurance (Gros Pépin). "
+                    + "Réponds en français de manière claire et concise en te basant sur les informations du client.\n"
+                    + "Informations client (contrats et paiements) : " + clientContext + "\n"
                     + "Question : " + userQuestion;
 
-            ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> bodyMap = Map.of(
                     "contents", List.of(
                             Map.of("parts", List.of(Map.of("text", fullPrompt)))
@@ -33,23 +44,31 @@ public class IaService {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(API_URL))
                     .header("Content-Type", "application/json")
+                    .timeout(Duration.ofSeconds(15))
                     .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                     .build();
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            JsonNode root = mapper.readTree(response.body());
-            JsonNode textNode = root.path("candidates").path(0).path("content").path("parts").path(0).path("text");
-
-            if (textNode.isMissingNode()) {
-                return "Erreur API : " + response.body();
+            if (response.statusCode() == 200) {
+                JsonNode root = mapper.readTree(response.body());
+                JsonNode textNode = root.path("candidates").path(0).path("content").path("parts").path(0).path("text");
+                if (!textNode.isMissingNode()) {
+                    return textNode.asText();
+                }
             }
-            return textNode.asText();
+
+            // Fallback response if API key is placeholder or call returns error
+            return "Bonjour ! Je suis votre assistant virtuel Gros Pépin.\n"
+                    + "Voici les données de votre dossier :\n" + clientContext + "\n\n"
+                    + "Votre question : \"" + userQuestion + "\"\n"
+                    + "(Remarque : Clé d'API Gemini non activée ou placeholder utilisé. Renseignez une clé valide dans IaService.java pour des réponses générées en direct).";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "Erreur lors de l'appel a l'IA.";
+            return "Bonjour ! Je suis votre assistant virtuel Gros Pépin.\n"
+                    + "Voici les données de votre dossier :\n" + clientContext + "\n\n"
+                    + "(Erreur de communication avec le service IA : " + e.getMessage() + ")";
         }
     }
 }
