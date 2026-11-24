@@ -11,9 +11,9 @@ public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paiement")
-    private int idPaiement;
+    private Integer idPaiement;
 
-    @Column(name = "montant", nullable = false)
+    @Column(nullable = false)
     private BigDecimal montant;
 
     @Column(name = "date_paiement", nullable = false)
@@ -22,13 +22,22 @@ public class Paiement {
     @Column(name = "mode_paiement", nullable = false)
     private String modePaiement;
 
-    @Column(name = "statut", nullable = false)
+    @Column(nullable = false)
     private String statut;
 
-    @Column(name = "id_contrat", nullable = false)
-    private int idContrat;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_contrat", nullable = false)
+    private Contrat contrat;
 
     public Paiement() {
+    }
+
+    public Paiement(BigDecimal montant, LocalDate datePaiement, String modePaiement, String statut, Contrat contrat) {
+        this.montant = montant;
+        this.datePaiement = datePaiement;
+        this.modePaiement = modePaiement;
+        this.statut = statut;
+        this.contrat = contrat;
     }
 
     public Paiement(BigDecimal montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
@@ -36,18 +45,19 @@ public class Paiement {
         this.datePaiement = datePaiement;
         this.modePaiement = modePaiement;
         this.statut = statut;
-        this.idContrat = idContrat;
+        this.contrat = new Contrat();
+        this.contrat.setIdContrat(idContrat);
     }
 
     public Paiement(double montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
         this(BigDecimal.valueOf(montant), datePaiement, modePaiement, statut, idContrat);
     }
 
-    public int getIdPaiement() {
+    public Integer getIdPaiement() {
         return idPaiement;
     }
 
-    public void setIdPaiement(int idPaiement) {
+    public void setIdPaiement(Integer idPaiement) {
         this.idPaiement = idPaiement;
     }
 
@@ -56,6 +66,12 @@ public class Paiement {
     }
 
     public void setMontant(BigDecimal montant) {
+        if (montant == null) {
+            throw new IllegalArgumentException("Le montant du paiement est obligatoire.");
+        }
+        if (montant.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Le montant du paiement doit être supérieur à zéro.");
+        }
         this.montant = montant;
     }
 
@@ -64,6 +80,9 @@ public class Paiement {
     }
 
     public void setDatePaiement(LocalDate datePaiement) {
+        if (datePaiement == null) {
+            throw new IllegalArgumentException("La date de paiement est obligatoire.");
+        }
         this.datePaiement = datePaiement;
     }
 
@@ -72,6 +91,12 @@ public class Paiement {
     }
 
     public void setModePaiement(String modePaiement) {
+        if (modePaiement == null || modePaiement.isBlank()) {
+            throw new IllegalArgumentException("Le mode de paiement est obligatoire.");
+        }
+        if (!modePaiement.equals("CARTE") && !modePaiement.equals("VIREMENT") && !modePaiement.equals("PRELEVEMENT")) {
+            throw new IllegalArgumentException("Mode de paiement invalide.");
+        }
         this.modePaiement = modePaiement;
     }
 
@@ -80,14 +105,36 @@ public class Paiement {
     }
 
     public void setStatut(String statut) {
+        if (statut == null || statut.isBlank()) {
+            throw new IllegalArgumentException("Le statut du paiement est obligatoire.");
+        }
+        if (!statut.equals("EN_ATTENTE") && !statut.equals("EFFECTUE") && !statut.equals("ECHOUE")) {
+            throw new IllegalArgumentException("Statut de paiement invalide.");
+        }
         this.statut = statut;
     }
 
-    public int getIdContrat() {
-        return idContrat;
+    public Contrat getContrat() {
+        return contrat;
     }
 
-    public void setIdContrat(int idContrat) {
-        this.idContrat = idContrat;
+    public void setContrat(Contrat contrat) {
+        if (contrat == null) {
+            throw new IllegalArgumentException("Le paiement doit être rattaché à un contrat.");
+        }
+        this.contrat = contrat;
+    }
+
+    public Integer getIdContrat() {
+        return contrat != null ? contrat.getIdContrat() : null;
+    }
+
+    public void setIdContrat(Integer idContrat) {
+        if (idContrat != null) {
+            if (this.contrat == null) {
+                this.contrat = new Contrat();
+            }
+            this.contrat.setIdContrat(idContrat);
+        }
     }
 }

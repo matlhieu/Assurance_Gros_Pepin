@@ -98,6 +98,9 @@ public class Contrat {
 
    
 
+    public Utilisateur getUtilisateur() { return utilisateur; }
+    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
+
     public TypeAssurance getTypeAssurance() { return typeAssurance; }
     public void setTypeAssurance(TypeAssurance typeAssurance) { this.typeAssurance = typeAssurance; }
 
