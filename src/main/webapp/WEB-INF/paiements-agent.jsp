@@ -165,7 +165,6 @@
             <p class="page-subtitle">Enregistrement et suivi des encaissements clients.</p>
         </div>
 
-        <!-- Formulaire d'enregistrement d'un paiement -->
         <div class="form-card">
             <h2>Enregistrer un nouveau paiement</h2>
             <form method="post" action="${pageContext.request.contextPath}/agent/paiements">
@@ -216,7 +215,6 @@
             </form>
         </div>
 
-        <!-- Tableau des paiements existants -->
         <div class="table-container">
             <table class="custom-table">
                 <thead>

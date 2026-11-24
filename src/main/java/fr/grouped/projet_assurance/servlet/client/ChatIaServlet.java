@@ -38,13 +38,11 @@ public class ChatIaServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
-        // Safe fallback to sample client ID 3 if not logged in
         int clientId = (utilisateur != null) ? utilisateur.getIdUtilisateur() : 3;
 
         List<Contrat> contrats = contratDAO.findByClient(clientId);
         List<Paiement> paiements = paiementDAO.findByClientId(clientId);
 
-        // Build client context for the AI prompt
         StringBuilder context = new StringBuilder();
         if (utilisateur != null) {
             context.append("Client : ").append(utilisateur.getPrenom()).append(" ").append(utilisateur.getNom())

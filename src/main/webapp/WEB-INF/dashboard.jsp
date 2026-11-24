@@ -123,7 +123,6 @@
             <p class="page-subtitle">Indicateurs clés de performance financière et portefeuille de contrats.</p>
         </div>
 
-        <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-title">Chiffre d'affaires encaissé</div>
@@ -139,7 +138,6 @@
             </div>
         </div>
 
-        <!-- Section Graphique & Tableau Contrats -->
         <div class="stats-grid">
             <div class="panel-card">
                 <h2 class="panel-title">Répartition des contrats par statut</h2>
@@ -202,11 +200,11 @@
                     datasets: [{
                         data: chartData,
                         backgroundColor: [
-                            '#9AD5CA', // Pearl Aqua
-                            '#ACDDE7', // Frosted Blue
-                            '#ADB9E3', // Periwinkle
-                            '#A379C9', // Bright Lavender
-                            '#B744B8'  // Vivid Orchid
+                            '#9AD5CA',
+                            '#ACDDE7',
+                            '#ADB9E3',
+                            '#A379C9',
+                            '#B744B8'
                         ],
                         borderWidth: 1
                     }]

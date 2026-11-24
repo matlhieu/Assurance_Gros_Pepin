@@ -18,10 +18,9 @@ public class PaiementDaoTest {
         PaiementDAO dao = new PaiementDAOImpl();
         try {
             List<Paiement> list = dao.findAll();
-            System.out.println("Paiements trouvés : " + (list != null ? list.size() : 0));
             Assertions.assertNotNull(list);
         } catch (Exception e) {
-            System.out.println("DB not available during test: " + e.getMessage());
+            System.out.println("Base de données non disponible : " + e.getMessage());
         }
     }
 
@@ -29,7 +28,6 @@ public class PaiementDaoTest {
     public void testSaveUpdateDelete() {
         PaiementDAO dao = new PaiementDAOImpl();
 
-        // 1. Sauvegarde d'un paiement en attente
         Paiement p = new Paiement();
         p.setMontant(new BigDecimal("120.50"));
         p.setDatePaiement(LocalDate.now());
@@ -44,23 +42,20 @@ public class PaiementDaoTest {
             dao.save(p);
             Assertions.assertNotNull(p.getIdPaiement());
 
-            // 2. Recherche par ID
             Paiement found = dao.findById(p.getIdPaiement());
             Assertions.assertNotNull(found);
             Assertions.assertEquals("EN_ATTENTE", found.getStatut());
 
-            // 3. Mise à jour (encaissement)
             found.setStatut("EFFECTUE");
             dao.update(found);
 
             Paiement updated = dao.findById(p.getIdPaiement());
             Assertions.assertEquals("EFFECTUE", updated.getStatut());
 
-            // 4. Nettoyage (suppression)
             dao.delete(updated.getIdPaiement());
             Assertions.assertNull(dao.findById(updated.getIdPaiement()));
         } catch (Exception e) {
-            System.out.println("DB not available during test: " + e.getMessage());
+            System.out.println("Base de données non disponible : " + e.getMessage());
         }
     }
 
@@ -70,11 +65,10 @@ public class PaiementDaoTest {
         try {
             BigDecimal rev = statsDAO.getTotalRevenue();
             BigDecimal pending = statsDAO.getTotalPendingPayments();
-            System.out.println("Revenue: " + rev + ", Pending: " + pending);
             Assertions.assertNotNull(rev);
             Assertions.assertNotNull(pending);
         } catch (Exception e) {
-            System.out.println("DB not available during test: " + e.getMessage());
+            System.out.println("Base de données non disponible : " + e.getMessage());
         }
     }
 }

@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class IaService {
 
-    // API Key placeholder as requested
     private static final String API_KEY = "AQ.Ab8RN6LdWgl_EQMJl0p10YJuA8QSAoKCA8dE2lQ907Lcfse-kA";
     private static final String API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + API_KEY;
 
@@ -22,7 +21,6 @@ public class IaService {
             .build();
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // Call Gemini API passing client context and question
     public String askAssistant(String userQuestion, String clientContext) {
         if (userQuestion == null || userQuestion.trim().isEmpty()) {
             return "Veuillez poser une question.";
@@ -58,11 +56,10 @@ public class IaService {
                 }
             }
 
-            // Fallback response if API key is placeholder or call returns error
             return "Bonjour ! Je suis votre assistant virtuel Gros Pépin.\n"
                     + "Voici les données de votre dossier :\n" + clientContext + "\n\n"
                     + "Votre question : \"" + userQuestion + "\"\n"
-                    + "(Remarque : Clé d'API Gemini non activée ou placeholder utilisé. Renseignez une clé valide dans IaService.java pour des réponses générées en direct).";
+                    + "(Remarque : Service IA momentanément indisponible).";
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -41,7 +41,6 @@ public class PaiementAgentServlet extends HttpServlet {
 
         try {
             if ("updateStatut".equalsIgnoreCase(action) || "encaisser".equalsIgnoreCase(action)) {
-                // Update payment status (e.g. validate pending payment)
                 int idPaiement = Integer.parseInt(req.getParameter("idPaiement"));
                 Paiement p = paiementDAO.findById(idPaiement);
                 if (p != null) {
@@ -59,7 +58,6 @@ public class PaiementAgentServlet extends HttpServlet {
                     paiementDAO.update(p);
                 }
             } else {
-                // Record a new payment
                 int idContrat = Integer.parseInt(req.getParameter("idContrat"));
                 BigDecimal montant = new BigDecimal(req.getParameter("montant"));
                 String modePaiement = req.getParameter("modePaiement");

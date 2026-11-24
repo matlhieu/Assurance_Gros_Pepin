@@ -25,7 +25,6 @@ public class PaiementClientServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 
-        // Safe fallback if not logged in (use client ID 3 from sample data)
         int clientId = (utilisateur != null) ? utilisateur.getIdUtilisateur() : 3;
 
         List<Paiement> paiements = paiementDAO.findByClientId(clientId);
