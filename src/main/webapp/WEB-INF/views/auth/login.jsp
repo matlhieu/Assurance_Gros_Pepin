@@ -46,7 +46,7 @@
                 <input type="submit" value="Se connecter" class="bouton-valider">
             </form>
 
-            <a href="${pageContext.request.contextPath}/inscription" class="lien-fleche">
+            <a href="${pageContext.request.contextPath}/register" class="lien-fleche">
                 <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                 Pas encore client ? Créez votre espace personnel
             </a>
