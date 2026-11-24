@@ -1,21 +1,37 @@
-package model;
+
+package fr.grouped.projet_assurance.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.persistence.*;
 
+@Entity // <-- AJOUTE
+@Table(name = "types_assurance")
 public class TypeAssurance {
 
-    private Long idTypeAssurance;
+    @Id // <-- AJOUTE
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // <-- AJOUTE
+    @Column(name = "id_type_assurance")
+    private Integer idTypeAssurance;
+    @Column(nullable = false)
     private String nom;
     private String description;
+    @Column(name = "prix_base", precision = 10, scale = 2)
     private BigDecimal prixBase;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "type_garanties",
+        joinColumns = @JoinColumn(name = "id_type"),
+        inverseJoinColumns = @JoinColumn(name = "id_garantie")
+    )
     private List<Garantie> garantiesDisponibles = new ArrayList<>();
+    
 
     public TypeAssurance() {
     }
 
-    public TypeAssurance(Long idTypeAssurance, String nom, String description,
+    public TypeAssurance(Integer idTypeAssurance, String nom, String description,
                          BigDecimal prixBase, List<Garantie> garantiesDisponibles) {
         this.idTypeAssurance = idTypeAssurance;
         this.nom = nom;
@@ -26,8 +42,8 @@ public class TypeAssurance {
 
     // getters / setters
 
-    public Long getIdTypeAssurance() { return idTypeAssurance; }
-    public void setIdTypeAssurance(Long idTypeAssurance) { this.idTypeAssurance = idTypeAssurance; }
+    public Integer getIdTypeAssurance() { return idTypeAssurance; }
+    public void setIdTypeAssurance(Integer idTypeAssurance) { this.idTypeAssurance = idTypeAssurance; }
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }

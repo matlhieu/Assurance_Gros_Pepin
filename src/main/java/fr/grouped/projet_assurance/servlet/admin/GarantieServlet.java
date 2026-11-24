@@ -4,11 +4,11 @@ import fr.grouped.projet_assurance.dao.GarantieDAO;
 import fr.grouped.projet_assurance.dao.impl.GarantieDAOImpl;
 import fr.grouped.projet_assurance.model.Garantie;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -39,14 +39,14 @@ public class GarantieServlet extends HttpServlet {
             case "form":
                 String idParam = request.getParameter("id");
                 if (idParam != null) {
-                    Garantie garantie = garantieDAO.findById(Long.parseLong(idParam));
+                    Garantie garantie = garantieDAO.findById(Integer.parseInt(idParam));
                     request.setAttribute("garantie", garantie);
                 }
                 request.getRequestDispatcher("/WEB-INF/views/admin/garanties/form.jsp").forward(request, response);
                 break;
                 
             case "delete":
-                Long id = Long.parseLong(request.getParameter("id"));
+                Integer id = Integer.parseInt(request.getParameter("id"));
                 garantieDAO.delete(id);
                 response.sendRedirect(request.getContextPath() + "/admin/garanties?action=list");
                 break;
@@ -67,7 +67,7 @@ public class GarantieServlet extends HttpServlet {
 
             Garantie garantie = new Garantie();
             if (idParam != null && !idParam.isEmpty()) {
-                garantie.setIdGarantie(Long.parseLong(idParam));
+                garantie.setIdGarantie(Integer.parseInt(idParam));
             }
             garantie.setNom(nom);
             garantie.setDescription(description);

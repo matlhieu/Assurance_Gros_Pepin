@@ -8,11 +8,12 @@ import fr.grouped.projet_assurance.model.Contrat;
 import fr.grouped.projet_assurance.model.TypeAssurance;
 import fr.grouped.projet_assurance.model.enums.StatutContrat;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,11 +30,13 @@ public class ContratServlet extends HttpServlet {
 
     private ContratDAO contratDAO;
     private TypeAssuranceDAO typeAssuranceDAO;
+     private GarantieDAO garantieDAO;
 
     @Override
     public void init() throws ServletException {
         contratDAO = new ContratDAOImpl();
         typeAssuranceDAO = new TypeAssuranceDAOImpl();
+        garantieDAO = new GarantieDAOImpl();
         garantieDAO = new GarantieDAOImpl();
     }
 
@@ -60,20 +63,20 @@ public class ContratServlet extends HttpServlet {
                 
                 String idParam = request.getParameter("id");
                 if (idParam != null) {
-                    Contrat contrat = contratDAO.findById(Long.parseLong(idParam));
+                    Contrat contrat = contratDAO.findById(Integer.parseInt(idParam));
                     request.setAttribute("contrat", contrat);
                 }
                 request.getRequestDispatcher("/WEB-INF/views/admin/contrats/form.jsp").forward(request, response);
                 break;
                 
             case "delete":
-                Long id = Long.parseLong(request.getParameter("id"));
+                Integer id = Integer.parseInt(request.getParameter("id"));
                 contratDAO.delete(id);
                 response.sendRedirect(request.getContextPath() + "/admin/contrats?action=list");
                 break;
                 
             case "detail":
-                Long idDetail = Long.parseLong(request.getParameter("id"));
+                Integer idDetail = Integer.parseInt(request.getParameter("id"));
                 Contrat contratDetail = contratDAO.findById(idDetail);
                 request.setAttribute("contrat", contratDetail);
                 request.getRequestDispatcher("/WEB-INF/views/admin/contrats/detail.jsp").forward(request, response);
@@ -99,7 +102,7 @@ public class ContratServlet extends HttpServlet {
 
             Contrat contrat = new Contrat();
             if (idParam != null && !idParam.isEmpty()) {
-                contrat.setIdContrat(Long.parseLong(idParam));
+                contrat.setIdContrat(Integer.parseInt(idParam));
             }
             
             contrat.setNumContrat(numContrat);
@@ -109,7 +112,7 @@ public class ContratServlet extends HttpServlet {
             contrat.setStatut(StatutContrat.valueOf(statutStr));
             
             // On associe le type d'assurance
-            TypeAssurance type = typeAssuranceDAO.findById(Long.parseLong(idTypeStr));
+            TypeAssurance type = typeAssuranceDAO.findById(Integer.parseInt(idTypeStr));
             contrat.setTypeAssurance(type);
             
             // Récupérer les garanties cochées dans le formulaire
@@ -118,7 +121,7 @@ public class ContratServlet extends HttpServlet {
 
             if (garantiesIds != null) {
                 for (String gId : garantiesIds) {
-                    Garantie g = garantieDAO.findById(Long.parseLong(gId));
+                    Garantie g = garantieDAO.findById(Integer.parseInt(gId));
                     if (g != null) {
                         garantiesChoisies.add(g);
                     }

@@ -1,8 +1,17 @@
-package com.assurance.model;
 
+package fr.grouped.projet_assurance.model;
+import jakarta.persistence.*;
+
+
+@Entity // <-- AJOUTE
+@Table(name = "garanties") 
 public class Garantie {
 
-    private Long idGarantie;
+    @Id // <-- AJOUTE
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // <-- AJOUTE
+    @Column(name = "id_garantie")
+    private Integer idGarantie;
+    @Column(nullable = false)
     private String nom;
     private String description;
 
@@ -13,10 +22,10 @@ public class Garantie {
         this.description = description;
     }
 
-    public Long getIdGarantie() {
+    public Integer getIdGarantie() {
         return idGarantie;
     }
-    public void setIdGarantie(Long idGarantie) {
+    public void setIdGarantie(Integer idGarantie) {
         this.idGarantie = idGarantie;
     }
     public String getNom() {
