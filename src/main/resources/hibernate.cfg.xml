@@ -17,14 +17,15 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
 
-        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
+        <!-- TOUTES LES CLASSES DOIVENT ÊTRE DÉCOMMENTÉES -->
         <mapping class="fr.grouped.projet_assurance.model.Utilisateur"/>
-        <!-- <mapping class="fr.grouped.projet_assurance.model.TypeAssurance"/>
+        <mapping class="fr.grouped.projet_assurance.model.TypeAssurance"/>
         <mapping class="fr.grouped.projet_assurance.model.Garantie"/>
         <mapping class="fr.grouped.projet_assurance.model.Contrat"/>
         <mapping class="fr.grouped.projet_assurance.model.Sinistre"/>
         <mapping class="fr.grouped.projet_assurance.model.PieceJointe"/>
-        <mapping class="fr.grouped.projet_assurance.model.Paiement"/> -->
+        <mapping class="fr.grouped.projet_assurance.model.Paiement"/>
     </session-factory>
 </hibernate-configuration>
