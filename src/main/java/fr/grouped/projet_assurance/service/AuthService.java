@@ -4,6 +4,9 @@ import fr.grouped.projet_assurance.dao.UtilisateurDAO;
 import fr.grouped.projet_assurance.dao.impl.UtilisateurDAOImpl;
 import fr.grouped.projet_assurance.model.Utilisateur;
 import fr.grouped.projet_assurance.util.PasswordUtil;
+import org.hibernate.exception.ConstraintViolationException;
+
+import java.util.Locale;
 
 public class AuthService {
 
@@ -40,8 +43,35 @@ public class AuthService {
         // u.setDateInscription(java.time.LocalDate.now());
         // u.setStatutCompte("ACTIF");
 
-        utilisateurDAO.save(u);
+        try {
+            utilisateurDAO.save(u);
+        } catch (RuntimeException e) {
+            if (isEmailAlreadyUsed(e)) {
+                throw new IllegalArgumentException("Cet email est déjà utilisé.", e);
+            }
+            throw e;
+        }
         return u;
+    }
+
+    private boolean isEmailAlreadyUsed(Throwable error) {
+        for (Throwable cause = error; cause != null; cause = cause.getCause()) {
+            if (cause instanceof ConstraintViolationException violation) {
+                String constraintName = violation.getConstraintName();
+                if (constraintName != null
+                        && constraintName.toLowerCase(Locale.ROOT).contains("email")) {
+                    return true;
+                }
+
+                java.sql.SQLException sqlException = violation.getSQLException();
+                String message = sqlException != null
+                        ? sqlException.getMessage()
+                        : violation.getMessage();
+                return message != null
+                        && message.toLowerCase(Locale.ROOT).contains("email");
+            }
+        }
+        return false;
     }
 
     /**

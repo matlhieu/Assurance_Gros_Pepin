@@ -22,7 +22,7 @@
                     <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
                     <span>Déclarer un<br>sinistre</span>
                 </a>
-                <a href="${pageContext.request.contextPath}/inscription" class="action">
+                <a href="${pageContext.request.contextPath}/register" class="action">
                     <svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3.1-6.5 7-6.5 1.4 0 2.7.3 3.8.9M18 14v6M15 17h6"/></svg>
                     <span>Inscription</span>
                 </a>
