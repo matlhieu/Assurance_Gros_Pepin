@@ -1,5 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.util.Map" %>
+<%!
+    private String escapeHtml(Object value) {
+        if (value == null) {
+            return "";
+        }
+        return value.toString()
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
+    }
+%>
+<%
+    Map<?, ?> erreurs = (Map<?, ?>) request.getAttribute("erreurs");
+%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -45,55 +61,55 @@
             <img src="${pageContext.request.contextPath}/image/logo.png" alt="Gros Pépin" class="login-logo">
             <h1 class="login-titre">Créer votre compte</h1>
 
-            <form method="post" action="${pageContext.request.contextPath}/inscription">
+            <form method="post" action="${pageContext.request.contextPath}/register">
                 <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom" value="<c:out value='${prenom}'/>"
+                <input type="text" id="prenom" name="prenom" value="<%= escapeHtml(request.getAttribute("prenom")) %>"
                        maxlength="50" autocomplete="given-name" required>
-                <c:if test="${not empty erreurs.prenom}">
-                    <p class="erreur"><c:out value="${erreurs.prenom}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("prenom") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("prenom")) %></p>
+                <% } %>
 
                 <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" value="<c:out value='${nom}'/>"
+                <input type="text" id="nom" name="nom" value="<%= escapeHtml(request.getAttribute("nom")) %>"
                        maxlength="50" autocomplete="family-name" required>
-                <c:if test="${not empty erreurs.nom}">
-                    <p class="erreur"><c:out value="${erreurs.nom}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("nom") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("nom")) %></p>
+                <% } %>
 
                 <label for="email">Adresse e-mail</label>
-                <input type="email" id="email" name="email" value="<c:out value='${email}'/>"
+                <input type="email" id="email" name="email" value="<%= escapeHtml(request.getAttribute("email")) %>"
                        maxlength="100" autocomplete="email" required>
-                <c:if test="${not empty erreurs.email}">
-                    <p class="erreur"><c:out value="${erreurs.email}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("email") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("email")) %></p>
+                <% } %>
 
                 <label for="telephone">Téléphone</label>
-                <input type="tel" id="telephone" name="telephone" value="<c:out value='${telephone}'/>"
+                <input type="tel" id="telephone" name="telephone" value="<%= escapeHtml(request.getAttribute("telephone")) %>"
                        maxlength="20" autocomplete="tel" required>
-                <c:if test="${not empty erreurs.telephone}">
-                    <p class="erreur"><c:out value="${erreurs.telephone}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("telephone") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("telephone")) %></p>
+                <% } %>
 
                 <label for="adresse">Adresse</label>
-                <input type="text" id="adresse" name="adresse" value="<c:out value='${adresse}'/>"
+                <input type="text" id="adresse" name="adresse" value="<%= escapeHtml(request.getAttribute("adresse")) %>"
                        autocomplete="street-address" required>
-                <c:if test="${not empty erreurs.adresse}">
-                    <p class="erreur"><c:out value="${erreurs.adresse}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("adresse") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("adresse")) %></p>
+                <% } %>
 
                 <label for="motDePasse">Mot de passe</label>
                 <input type="password" id="motDePasse" name="motDePasse"
                        minlength="6" autocomplete="new-password" required>
-                <c:if test="${not empty erreurs.motDePasse}">
-                    <p class="erreur"><c:out value="${erreurs.motDePasse}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("motDePasse") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("motDePasse")) %></p>
+                <% } %>
 
                 <label for="confirmation">Confirmer le mot de passe</label>
                 <input type="password" id="confirmation" name="confirmation"
                        minlength="6" autocomplete="new-password" required>
-                <c:if test="${not empty erreurs.confirmation}">
-                    <p class="erreur"><c:out value="${erreurs.confirmation}"/></p>
-                </c:if>
+                <% if (erreurs != null && erreurs.get("confirmation") != null) { %>
+                    <p class="erreur"><%= escapeHtml(erreurs.get("confirmation")) %></p>
+                <% } %>
 
                 <input type="submit" value="Créer mon compte" class="bouton-valider">
             </form>

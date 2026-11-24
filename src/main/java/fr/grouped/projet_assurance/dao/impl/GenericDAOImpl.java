@@ -20,41 +20,60 @@ public abstract class GenericDAOImpl<T, ID extends Serializable>
 
     @Override
     public void save(T entity) {
-        Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.persist(entity);
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            throw new RuntimeException("Erreur save " + entityClass.getSimpleName(), e);
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                session.persist(entity);
+                tx.commit();
+            } catch (Exception e) {
+                rollback(tx, e);
+                throw new RuntimeException("Erreur save " + entityClass.getSimpleName(), e);
+            }
         }
     }
 
     @Override
     public void update(T entity) {
-        Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            session.merge(entity);
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            throw new RuntimeException("Erreur update " + entityClass.getSimpleName(), e);
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                session.merge(entity);
+                tx.commit();
+            } catch (Exception e) {
+                rollback(tx, e);
+                throw new RuntimeException("Erreur update " + entityClass.getSimpleName(), e);
+            }
         }
     }
 
     @Override
     public void delete(ID id) {
-        Transaction tx = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            tx = session.beginTransaction();
-            T entity = session.get(entityClass, id);
-            if (entity != null) session.remove(entity);
-            tx.commit();
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            throw new RuntimeException("Erreur delete " + entityClass.getSimpleName(), e);
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                T entity = session.get(entityClass, id);
+                if (entity != null) session.remove(entity);
+                tx.commit();
+            } catch (Exception e) {
+                rollback(tx, e);
+                throw new RuntimeException("Erreur delete " + entityClass.getSimpleName(), e);
+            }
+        }
+    }
+
+    private void rollback(Transaction tx, Exception cause) {
+        if (tx != null) {
+            try {
+                if (!tx.isActive()) {
+                    return;
+                }
+                tx.rollback();
+            } catch (RuntimeException rollbackException) {
+                cause.addSuppressed(rollbackException);
+            }
         }
     }
 

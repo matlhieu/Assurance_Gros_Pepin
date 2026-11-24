@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/inscription")
+@WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 
     private final AuthService authService = new AuthService();
@@ -110,10 +110,13 @@ public class RegisterServlet extends HttpServlet {
             Utilisateur utilisateur = authService.inscrire(
                     nom, prenom, email, motDePasse);
 
-            // Inscription réussie → rediriger vers login avec message
-            request.getSession().setAttribute("flashSuccess",
-                    "Compte créé avec succès. Vous pouvez maintenant vous connecter.");
-            response.sendRedirect(request.getContextPath() + "/login");
+            HttpSession session = request.getSession();
+            request.changeSessionId();
+            session.setAttribute("utilisateur", utilisateur);
+            session.setAttribute("role", utilisateur.getRole());
+
+            // Inscription réussie et connexion → rediriger vers l'accueil
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
 
         } catch (IllegalArgumentException e) {
             // Email déjà utilisé, ou autre erreur métier
@@ -122,6 +125,8 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("nom", nom);
             request.setAttribute("prenom", prenom);
             request.setAttribute("email", email);
+            request.setAttribute("telephone", telephone);
+            request.setAttribute("adresse", adresse);
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp")
                    .forward(request, response);
         }
