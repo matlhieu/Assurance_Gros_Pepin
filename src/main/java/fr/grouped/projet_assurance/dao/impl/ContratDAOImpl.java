@@ -19,7 +19,7 @@ public class ContratDAOImpl extends GenericDAOImpl<Contrat, Integer> implements 
     public List<Contrat> findByClient(Integer idClient) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Contrat> query = session.createQuery(
-                "FROM Contrat c WHERE c.client.idUtilisateur = :idClient", Contrat.class);
+                "FROM Contrat c WHERE c.utilisateur.idUtilisateur = :idClient", Contrat.class);
             query.setParameter("idClient", idClient);
             return query.list();
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class ContratDAOImpl extends GenericDAOImpl<Contrat, Integer> implements 
     public List<Contrat> search(String keyword) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Contrat> query = session.createQuery(
-                "FROM Contrat c WHERE c.numContrat LIKE :kw OR c.client.nom LIKE :kw", Contrat.class);
+                "FROM Contrat c WHERE c.numContrat LIKE :kw OR c.utilisateur.nom LIKE :kw", Contrat.class);
             query.setParameter("kw", "%" + keyword + "%");
             return query.list();
         } catch (Exception e) {

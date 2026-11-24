@@ -7,8 +7,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "paiements")
 public class Paiement {
-    
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_paiement")
     private Integer idPaiement;
@@ -20,16 +20,38 @@ public class Paiement {
     private LocalDate datePaiement;
 
     @Column(name = "mode_paiement", nullable = false)
-    private String modePaiement; // CARTE, VIREMENT, PRELEVEMENT
+    private String modePaiement;
 
     @Column(nullable = false)
-    private String statut; // EN_ATTENTE, EFFECTUE, ECHOUE
+    private String statut;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_contrat", nullable = false)
     private Contrat contrat;
 
-    // --- GETTERS ET SETTERS SÉCURISÉS ---
+    public Paiement() {
+    }
+
+    public Paiement(BigDecimal montant, LocalDate datePaiement, String modePaiement, String statut, Contrat contrat) {
+        this.montant = montant;
+        this.datePaiement = datePaiement;
+        this.modePaiement = modePaiement;
+        this.statut = statut;
+        this.contrat = contrat;
+    }
+
+    public Paiement(BigDecimal montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
+        this.montant = montant;
+        this.datePaiement = datePaiement;
+        this.modePaiement = modePaiement;
+        this.statut = statut;
+        this.contrat = new Contrat();
+        this.contrat.setIdContrat(idContrat);
+    }
+
+    public Paiement(double montant, LocalDate datePaiement, String modePaiement, String statut, int idContrat) {
+        this(BigDecimal.valueOf(montant), datePaiement, modePaiement, statut, idContrat);
+    }
 
     public Integer getIdPaiement() {
         return idPaiement;
@@ -43,7 +65,6 @@ public class Paiement {
         return montant;
     }
 
-    // SÉCURITÉ : Vérifie que le montant n'est pas nul et qu'il est > 0
     public void setMontant(BigDecimal montant) {
         if (montant == null) {
             throw new IllegalArgumentException("Le montant du paiement est obligatoire.");
@@ -58,7 +79,6 @@ public class Paiement {
         return datePaiement;
     }
 
-    // SÉCURITÉ : La date ne peut pas être nulle (contrainte NOT NULL en BDD)
     public void setDatePaiement(LocalDate datePaiement) {
         if (datePaiement == null) {
             throw new IllegalArgumentException("La date de paiement est obligatoire.");
@@ -70,7 +90,6 @@ public class Paiement {
         return modePaiement;
     }
 
-    // SÉCURITÉ : Vérifie que le mode est valide
     public void setModePaiement(String modePaiement) {
         if (modePaiement == null || modePaiement.isBlank()) {
             throw new IllegalArgumentException("Le mode de paiement est obligatoire.");
@@ -85,7 +104,6 @@ public class Paiement {
         return statut;
     }
 
-    // SÉCURITÉ : Vérifie que le statut est valide
     public void setStatut(String statut) {
         if (statut == null || statut.isBlank()) {
             throw new IllegalArgumentException("Le statut du paiement est obligatoire.");
@@ -100,11 +118,23 @@ public class Paiement {
         return contrat;
     }
 
-    // SÉCURITÉ : Un paiement doit obligatoirement être lié à un contrat
     public void setContrat(Contrat contrat) {
         if (contrat == null) {
             throw new IllegalArgumentException("Le paiement doit être rattaché à un contrat.");
         }
         this.contrat = contrat;
+    }
+
+    public Integer getIdContrat() {
+        return contrat != null ? contrat.getIdContrat() : null;
+    }
+
+    public void setIdContrat(Integer idContrat) {
+        if (idContrat != null) {
+            if (this.contrat == null) {
+                this.contrat = new Contrat();
+            }
+            this.contrat.setIdContrat(idContrat);
+        }
     }
 }
