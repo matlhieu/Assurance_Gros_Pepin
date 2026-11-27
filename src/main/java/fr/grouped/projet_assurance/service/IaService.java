@@ -13,9 +13,9 @@ import java.util.Map;
 
 public class IaService {
 
-    private static final String API_KEY = "gsk_" + "METTRE_LA_SUITE_DE_LA_CLE_ICI";
+    private static final String API_KEY = "gsk_" + "9GsmZV22hF9X08vz1xFhWGdyb3FYVSITKTgjVWIAmFnOBVBsp7nA";
     private static final String API_URL = "https://api.groq.com/openai/v1/chat/completions";
-    private static final String MODELE = "llama-3.3-70b-versatile";
+    private static final String MODELE = "openai/gpt-oss-20b";
 
     private final HttpClient httpClient = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(10))

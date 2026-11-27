@@ -93,7 +93,7 @@
                         <%-- Liste fournie par la servlet selon le profil : ne pas écrire de listes EL
                              ici, les apostrophes françaises les cassent à la compilation JSP --%>
                         <c:forEach var="q" items="${suggestions}">
-                            <button type="submit" name="question" value="${q}" class="gp-suggestion">${q}</button>
+                            <button type="button" class="gp-suggestion"><c:out value="${q}"/></button>
                         </c:forEach>
                     </div>
                     <div class="gp-chat-ligne">
@@ -135,9 +135,12 @@
                 champ.style.height = 'auto';
                 champ.style.height = Math.min(champ.scrollHeight, 160) + 'px';
             });
-            // Les boutons de suggestion ne doivent pas être bloqués par le "required" du champ
+            // Un clic sur une suggestion remplit le champ et envoie le formulaire
             document.querySelectorAll('.gp-suggestion').forEach(function (b) {
-                b.addEventListener('click', function () { champ.required = false; });
+                b.addEventListener('click', function () {
+                    champ.value = b.textContent.trim();
+                    form.requestSubmit();
+                });
             });
             // Indicateur "l'assistant écrit…" pendant l'appel à l'IA : la page elle-même défile
             form.addEventListener('submit', function () {
