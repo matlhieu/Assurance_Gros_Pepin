@@ -99,7 +99,7 @@
                     <section class="gp-carte gp-carte-corps">
                         <h2 class="gp-aside-titre">Besoin d'aide ?</h2>
                         <p class="gp-discret" style="margin:0 0 14px">Une question sur vos garanties ? Notre assistant vous répond tout de suite.</p>
-                        <a href="${pageContext.request.contextPath}/client/assistant" class="gp-bouton-clair gp-bouton-bloc">Poser une question</a>
+                        <a href="${pageContext.request.contextPath}/assistant" class="gp-bouton-clair gp-bouton-bloc">Poser une question</a>
                     </section>
                 </aside>
             </div>

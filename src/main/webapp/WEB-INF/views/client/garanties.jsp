@@ -93,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="gp-carte-pied">
-                                    <a href="${pageContext.request.contextPath}/client/assistant" class="gp-lien">Poser une question à l'assistant →</a>
+                                    <a href="${pageContext.request.contextPath}/assistant" class="gp-lien">Poser une question à l'assistant →</a>
                                 </div>
                             </div>
                         </section>

@@ -1657,13 +1657,12 @@ a.gp-contrat:hover {
     margin: 0 auto;
 }
 
+/* Le fil suit le flux normal de la page : seule la fenêtre du navigateur défile
+   (pas de barre de défilement interne, comme demandé). */
 .gp-chat-fil {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    min-height: 280px;
-    max-height: 58vh;
-    overflow-y: auto;
     padding: 28px;
 }
 
