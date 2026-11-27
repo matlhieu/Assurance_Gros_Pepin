@@ -12,7 +12,7 @@ public class TypeAssurance {
 
     @Id // <-- AJOUTE
     @GeneratedValue(strategy = GenerationType.IDENTITY) // <-- AJOUTE
-    @Column(name = "id_type_assurance")
+    @Column(name = "id_type") // nom de la colonne dans schema.sql (id_type_assurance n existait pas)
     private Integer idTypeAssurance;
     @Column(nullable = false)
     private String nom;

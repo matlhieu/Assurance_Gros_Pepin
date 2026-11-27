@@ -1,9 +1,10 @@
--- utilisateurs :
+-- utilisateurs : mots de passe hachés en BCrypt (comptes de test)
+-- admin123 / agent123 / KingInTheNorth / Dracaris
 INSERT INTO utilisateurs (email, mot_de_passe, nom, prenom, role) VALUES
-('projetadmin@assurance.fr', 'admin123', 'Chef', 'Admin', 'ADMIN'),
-('agent@assurance.fr','agent123','Bond','James','AGENT'),
-('robbstark@gmail.com','KingInTheNorth','Stark','Robb','CLIENT'),
-('daenerys@gmail.com','Dracaris','Targaryen','Daenerys','CLIENT');
+('projetadmin@assurance.fr', '$2a$12$7vmY0yPbZ9SSRyP.R6QfluZOVRLqRt3WtwMKFzyISpLYfIpC48KSq', 'Chef', 'Admin', 'ADMIN'),
+('agent@assurance.fr','$2a$12$9.3JblvJ4ztnnPnmRprgZOPITiQKJuHtvaDUK2NH/ufKCJCk91eT6','Bond','James','AGENT'),
+('robbstark@gmail.com','$2a$12$5qJW54HDs6plOYhuNfF.N.8ALrpQdu3Yo/3vATgaeu4iRulSgQKKi','Stark','Robb','CLIENT'),
+('daenerys@gmail.com','$2a$12$MlFViXR3N95uVN2JbHgn2eFiPbtBJOhzB.xctFISM.dPULtk8QCji','Targaryen','Daenerys','CLIENT');
 
 INSERT INTO types_assurance (nom, description, prix_base) VALUES
 ('Automobile', 'Assurance auto tous risques et tiers', 300.00),

@@ -1,0 +1,15 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Message affiché une fois après une action (voir WebUtil.flash / consommerFlash) --%>
+<c:if test="${not empty flashMessage}">
+    <div class="gp-message ${flashType == 'erreur' ? 'gp-message-erreur' : 'gp-message-ok'}" role="status">
+        <c:choose>
+            <c:when test="${flashType == 'erreur'}">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5h.01"/></svg>
+            </c:when>
+            <c:otherwise>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9.5"/></svg>
+            </c:otherwise>
+        </c:choose>
+        <span><c:out value="${flashMessage}"/></span>
+    </div>
+</c:if>

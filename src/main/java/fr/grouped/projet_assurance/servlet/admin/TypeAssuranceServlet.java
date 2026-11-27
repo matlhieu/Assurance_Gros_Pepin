@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
-@WebServlet("/types") 
+@WebServlet("/admin/types")
 public class TypeAssuranceServlet extends HttpServlet {
 
     private TypeAssuranceDAO typeDAO;
@@ -35,7 +35,7 @@ public class TypeAssuranceServlet extends HttpServlet {
             case "list":
                 List<TypeAssurance> types = typeDAO.findAll();
                 request.setAttribute("types", types);
-                request.getRequestDispatcher("/WEB-INF/views/types/liste.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/admin/types/liste.jsp").forward(request, response);
                 break;
                 
             case "form":
@@ -45,13 +45,13 @@ public class TypeAssuranceServlet extends HttpServlet {
                     TypeAssurance type = typeDAO.findById(Integer.parseInt(idParam));
                     request.setAttribute("type", type);
                 }
-                request.getRequestDispatcher("/WEB-INF/views/types/form.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/admin/types/form.jsp").forward(request, response);
                 break;
                 
             case "delete":
                 Integer id = Integer.parseInt(request.getParameter("id"));
                 typeDAO.delete(id);
-                response.sendRedirect(request.getContextPath() + "/types?action=list");
+                response.sendRedirect(request.getContextPath() + "/admin/types?action=list");
                 break;
         }
     }
@@ -85,7 +85,7 @@ public class TypeAssuranceServlet extends HttpServlet {
                 typeDAO.update(type);
             }
 
-            response.sendRedirect(request.getContextPath() + "/types?action=list");
+            response.sendRedirect(request.getContextPath() + "/admin/types?action=list");
         }
     }
 }

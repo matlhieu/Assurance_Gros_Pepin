@@ -1,5 +1,18 @@
 <%@ page pageEncoding="UTF-8" %>
 <% String roleConnecte = (String) session.getAttribute("role"); %>
+<%!
+    /** Renvoie " actif" si la page courante commence par ce préfixe : l'onglet est alors souligné. */
+    private static String actif(String cheminCourant, String prefixe) {
+        return cheminCourant.startsWith(prefixe) ? " actif" : "";
+    }
+%>
+<%
+    // URL demandée par le navigateur (et non le chemin de la JSP, après le forward de la servlet)
+    String uriCourante = (String) request.getAttribute("jakarta.servlet.forward.request_uri");
+    if (uriCourante == null) uriCourante = request.getRequestURI();
+    String cheminCourant = uriCourante.substring(request.getContextPath().length());
+    if (cheminCourant.isEmpty() || cheminCourant.equals("/")) cheminCourant = "/index.jsp";
+%>
 <header class="entete">
 
     <div class="entete-haut">
@@ -8,17 +21,10 @@
             <span class="marque-nom">Gros Pépin</span>
         </a>
 
-        <% if (roleConnecte != null) { %>
-            <p class="bonjour">Bonjour <strong>${utilisateur.prenom}</strong></p>
-        <% } %>
 
         <div class="actions">
             <% if (roleConnecte == null) { %>
                 <%-- Visiteur non connecté --%>
-                <a href="${pageContext.request.contextPath}/login" class="action">
-                    <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-                    <span>Déclarer un<br>sinistre</span>
-                </a>
                 <a href="${pageContext.request.contextPath}/register" class="action">
                     <svg viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 21c0-4 3.1-6.5 7-6.5 1.4 0 2.7.3 3.8.9M18 14v6M15 17h6"/></svg>
                     <span>Inscription</span>
@@ -29,16 +35,11 @@
                 </a>
             <% } else { %>
                 <%-- Utilisateur connecté --%>
-                <% if (roleConnecte.equals("CLIENT")) { %>
-                    <a href="${pageContext.request.contextPath}/client/sinistres/declarer" class="action">
-                        <svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-                        <span>Déclarer un<br>sinistre</span>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/client/profil" class="action">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
-                        <span>Mon profil</span>
-                    </a>
-                <% } %>
+                <%-- Mon profil : /client/profil, /agent/profil ou /admin/profil selon le rôle --%>
+                <a href="${pageContext.request.contextPath}/<%= roleConnecte.toLowerCase() %>/profil" class="action">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                    <span>Mon profil</span>
+                </a>
                 <a href="${pageContext.request.contextPath}/logout" class="action action-principale">
                     <svg viewBox="0 0 24 24"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10"/></svg>
                     <span>Déconnexion</span>
@@ -59,32 +60,32 @@
             <a href="${pageContext.request.contextPath}/client/dashboard" class="accueil-icone" title="Mon espace">
                 <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
             </a>
-            <a href="${pageContext.request.contextPath}/client/contrats">Mes contrats</a>
-            <a href="${pageContext.request.contextPath}/client/garanties">Mes garanties</a>
-            <a href="${pageContext.request.contextPath}/client/paiements">Mes paiements</a>
-            <a href="${pageContext.request.contextPath}/client/sinistres">Mes sinistres</a>
-            <a href="${pageContext.request.contextPath}/client/assistant">Assistant IA</a>
+            <a href="${pageContext.request.contextPath}/client/contrats" class="<%= actif(cheminCourant, "/client/contrats").trim() %>">Mes contrats</a>
+            <a href="${pageContext.request.contextPath}/client/garanties" class="<%= actif(cheminCourant, "/client/garanties").trim() %>">Mes garanties</a>
+            <a href="${pageContext.request.contextPath}/client/paiements" class="<%= actif(cheminCourant, "/client/paiements").trim() %>">Mes paiements</a>
+            <a href="${pageContext.request.contextPath}/client/sinistres" class="<%= actif(cheminCourant, "/client/sinistres").trim() %>">Mes sinistres</a>
+            <a href="${pageContext.request.contextPath}/client/assistant" class="<%= actif(cheminCourant, "/client/assistant").trim() %>">Assistant IA</a>
 
         <% } else if (roleConnecte.equals("AGENT")) { %>
             <a href="${pageContext.request.contextPath}/agent/dashboard" class="accueil-icone" title="Tableau de bord">
                 <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
             </a>
-            <a href="${pageContext.request.contextPath}/agent/clients">Clients</a>
-            <a href="${pageContext.request.contextPath}/agent/contrats">Contrats</a>
-            <a href="${pageContext.request.contextPath}/agent/sinistres">Sinistres</a>
-            <a href="${pageContext.request.contextPath}/agent/garanties">Garanties</a>
-            <a href="${pageContext.request.contextPath}/agent/paiements">Paiements</a>
-            <a href="${pageContext.request.contextPath}/agent/statistiques">Statistiques</a>
+            <a href="${pageContext.request.contextPath}/agent/clients" class="<%= actif(cheminCourant, "/agent/clients").trim() %>">Clients</a>
+            <a href="${pageContext.request.contextPath}/agent/contrats" class="<%= actif(cheminCourant, "/agent/contrats").trim() %>">Contrats</a>
+            <a href="${pageContext.request.contextPath}/agent/sinistres" class="<%= actif(cheminCourant, "/agent/sinistres").trim() %>">Sinistres<% if (request.getAttribute("nbNouveauxSinistres") != null && ((Integer) request.getAttribute("nbNouveauxSinistres")) > 0) { %><span class="badge-menu" title="Nouvelles déclarations"><%= request.getAttribute("nbNouveauxSinistres") %></span><% } %></a>
+            <a href="${pageContext.request.contextPath}/agent/garanties" class="<%= actif(cheminCourant, "/agent/garanties").trim() %>">Garanties</a>
+            <a href="${pageContext.request.contextPath}/agent/paiements" class="<%= actif(cheminCourant, "/agent/paiements").trim() %>">Paiements</a>
+            <a href="${pageContext.request.contextPath}/agent/statistiques" class="<%= actif(cheminCourant, "/agent/statistiques").trim() %>">Statistiques</a>
 
         <% } else if (roleConnecte.equals("ADMIN")) { %>
             <a href="${pageContext.request.contextPath}/admin/dashboard" class="accueil-icone" title="Tableau de bord">
                 <svg viewBox="0 0 24 24"><path d="M3 11 12 3l9 8M5 9.5V21h14V9.5"/></svg>
             </a>
-            <a href="${pageContext.request.contextPath}/admin/utilisateurs">Utilisateurs</a>
-            <a href="${pageContext.request.contextPath}/admin/types">Types d'assurance</a>
-            <a href="${pageContext.request.contextPath}/admin/contrats">Contrats</a>
-            <a href="${pageContext.request.contextPath}/admin/sinistres">Sinistres</a>
-            <a href="${pageContext.request.contextPath}/admin/statistiques">Statistiques</a>
+            <a href="${pageContext.request.contextPath}/admin/utilisateurs" class="<%= actif(cheminCourant, "/admin/utilisateurs").trim() %>">Utilisateurs</a>
+            <a href="${pageContext.request.contextPath}/admin/types" class="<%= actif(cheminCourant, "/admin/types").trim() %>">Types d'assurance</a>
+            <a href="${pageContext.request.contextPath}/admin/contrats" class="<%= actif(cheminCourant, "/admin/contrats").trim() %>">Contrats</a>
+            <a href="${pageContext.request.contextPath}/admin/sinistres" class="<%= actif(cheminCourant, "/admin/sinistres").trim() %>">Sinistres<% if (request.getAttribute("nbNouveauxSinistres") != null && ((Integer) request.getAttribute("nbNouveauxSinistres")) > 0) { %><span class="badge-menu" title="Nouvelles déclarations"><%= request.getAttribute("nbNouveauxSinistres") %></span><% } %></a>
+            <a href="${pageContext.request.contextPath}/admin/statistiques" class="<%= actif(cheminCourant, "/admin/statistiques").trim() %>">Statistiques</a>
         <% } %>
     </nav>
 </header>

@@ -1,0 +1,28 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Icône selon le type de sinistre. Avant l'include : <c:set var="typeSin" value="..."/> --%>
+<c:choose>
+    <c:when test="${typeSin == 'Accident'}">
+        <svg viewBox="0 0 24 24"><path d="M3 16.5v-3.2l2-5.6A2 2 0 0 1 6.9 6.3h10.2a2 2 0 0 1 1.9 1.4l2 5.6v3.2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM3.5 12.5h17M6 17.5v2M18 17.5v2"/></svg>
+    </c:when>
+    <c:when test="${typeSin == 'Vol'}">
+        <svg viewBox="0 0 24 24"><path d="M5.5 11h13v10h-13zM8.5 11V8a3.5 3.5 0 0 1 7 0v3M12 15v2.5"/></svg>
+    </c:when>
+    <c:when test="${typeSin == 'Incendie'}">
+        <svg viewBox="0 0 24 24"><path d="M12 21c-3.9 0-6.5-2.6-6.5-6.2 0-3.6 3-5.6 3.8-9.3 1.8 1.4 2.7 3.1 2.7 5 1-.6 1.8-1.8 2-3.2 2.5 2 4.5 4.7 4.5 7.5 0 3.6-2.6 6.2-6.5 6.2z"/></svg>
+    </c:when>
+    <c:when test="${fn:startsWith(typeSin, 'D')}">
+        <svg viewBox="0 0 24 24"><path d="M12 3.5s6 6.3 6 10.8a6 6 0 0 1-12 0C6 9.8 12 3.5 12 3.5z"/></svg>
+    </c:when>
+    <c:when test="${fn:startsWith(typeSin, 'Bris')}">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM12.5 4l-2 6 3.5 2-2.5 8M4 12l6.5-2M14 12l6 3"/></svg>
+    </c:when>
+    <c:when test="${fn:startsWith(typeSin, 'Catastrophe')}">
+        <svg viewBox="0 0 24 24"><path d="M7 16.5a4.5 4.5 0 1 1 1-8.9A6 6 0 0 1 19.5 9.6 3.5 3.5 0 0 1 18 16.5M12.5 12.5l-2 4h3l-2 4"/></svg>
+    </c:when>
+    <c:when test="${fn:startsWith(typeSin, 'Sant')}">
+        <svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.4A4.2 4.2 0 0 1 12 7.4a4.2 4.2 0 0 1 7.5 2.7c0 5.8-7.5 10.4-7.5 10.4z"/></svg>
+    </c:when>
+    <c:otherwise>
+        <svg viewBox="0 0 24 24"><path d="M14 3.5H6.5v17h11V7zM14 3.5V7h3.5M9 12h6M9 16h4"/></svg>
+    </c:otherwise>
+</c:choose>

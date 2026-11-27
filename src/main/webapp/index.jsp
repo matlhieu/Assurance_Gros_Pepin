@@ -7,13 +7,12 @@
     <title>Assurance Gros Pépin</title>
     <link rel="icon" href="${pageContext.request.contextPath}/image/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=6">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=10">
 </head>
 <body>
     <%@ include file="/WEB-INF/header.jspf" %>
 
     <main class="accueil">
-        <!-- Formes décoratives aux couleurs de la palette -->
         <div class="deco" aria-hidden="true">
             <span class="deco-1"></span>
             <span class="deco-2"></span>

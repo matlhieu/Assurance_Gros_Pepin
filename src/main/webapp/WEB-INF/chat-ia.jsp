@@ -8,7 +8,7 @@
     <title>Assistant IA – Assurance Gros Pépin</title>
     <link rel="icon" href="${pageContext.request.contextPath}/image/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css?v=9">
     <style>
         .page-container {
             max-width: 860px;

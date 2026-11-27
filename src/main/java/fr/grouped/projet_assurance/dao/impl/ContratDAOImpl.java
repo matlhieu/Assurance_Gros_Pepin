@@ -50,4 +50,65 @@ public class ContratDAOImpl extends GenericDAOImpl<Contrat, Integer> implements 
             throw new RuntimeException("Erreur search Contrat", e);
         }
     }
+
+    // ---------- Requêtes avec JOIN FETCH (pour l'affichage dans les JSP) ----------
+
+    private static final String SELECT_DETAILS =
+        "SELECT DISTINCT c FROM Contrat c "
+      + "JOIN FETCH c.utilisateur "
+      + "JOIN FETCH c.typeAssurance "
+      + "LEFT JOIN FETCH c.garanties ";
+
+    @Override
+    public List<Contrat> findAllAvecDetails() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(SELECT_DETAILS + "ORDER BY c.dateDebut DESC", Contrat.class).list();
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur findAllAvecDetails Contrat", e);
+        }
+    }
+
+    @Override
+    public List<Contrat> findByClientAvecDetails(Integer idClient) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                    SELECT_DETAILS + "WHERE c.utilisateur.idUtilisateur = :idClient ORDER BY c.dateDebut DESC",
+                    Contrat.class)
+                .setParameter("idClient", idClient)
+                .list();
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur findByClientAvecDetails Contrat", e);
+        }
+    }
+
+    @Override
+    public Contrat findByIdAvecDetails(Integer idContrat) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(SELECT_DETAILS + "WHERE c.idContrat = :id", Contrat.class)
+                .setParameter("id", idContrat)
+                .uniqueResult();
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur findByIdAvecDetails Contrat", e);
+        }
+    }
+
+    @Override
+    public int expirerContratsEchus() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            org.hibernate.Transaction tx = session.beginTransaction();
+            try {
+                int n = session.createMutationQuery(
+                        "UPDATE Contrat c SET c.statut = :expire WHERE c.statut = :actif AND c.dateFin < :aujourdhui")
+                    .setParameter("expire", StatutContrat.EXPIRE)
+                    .setParameter("actif", StatutContrat.ACTIF)
+                    .setParameter("aujourdhui", java.time.LocalDate.now())
+                    .executeUpdate();
+                tx.commit();
+                return n;
+            } catch (RuntimeException e) {
+                tx.rollback();
+                throw e;
+            }
+        }
+    }
 }

@@ -1,0 +1,36 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Suivi vertical d'un sinistre. Variable attendue : "sinistre" --%>
+<c:set var="st" value="${sinistre.statut}"/>
+<ol class="gp-suivi" aria-label="Suivi du dossier">
+    <li class="gp-fait">
+        <span class="gp-suivi-point"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        <strong>Déclaration reçue</strong>
+        <small>Le ${WebUtil.date(sinistre.dateDeclaration)}</small>
+    </li>
+    <li class="${st == 'EN_ANALYSE' ? 'gp-courant' : (st == 'DECLARE' ? '' : 'gp-fait')}">
+        <span class="gp-suivi-point"><c:if test="${st != 'DECLARE' and st != 'EN_ANALYSE'}"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></c:if></span>
+        <strong>Analyse du dossier</strong>
+        <small>${st == 'EN_ANALYSE' ? 'En cours par un agent' : (st == 'DECLARE' ? 'Prise en charge à venir' : 'Terminée')}</small>
+    </li>
+    <c:choose>
+        <c:when test="${st == 'REFUSE'}">
+            <li class="gp-refus">
+                <span class="gp-suivi-point"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg></span>
+                <strong>Sinistre non pris en charge</strong>
+                <small>Dossier clos</small>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="${st == 'ACCEPTE' ? 'gp-courant' : (st == 'INDEMNISE' ? 'gp-fait' : '')}">
+                <span class="gp-suivi-point"><c:if test="${st == 'INDEMNISE'}"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></c:if></span>
+                <strong>Décision</strong>
+                <small>${st == 'ACCEPTE' or st == 'INDEMNISE' ? 'Sinistre accepté' : 'Acceptation ou refus'}</small>
+            </li>
+            <li class="${st == 'INDEMNISE' ? 'gp-fait' : ''}">
+                <span class="gp-suivi-point"><c:if test="${st == 'INDEMNISE'}"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></c:if></span>
+                <strong>Indemnisation</strong>
+                <small>${st == 'INDEMNISE' ? WebUtil.euros(sinistre.montantIndemnise).concat(' versés') : 'Versement du remboursement'}</small>
+            </li>
+        </c:otherwise>
+    </c:choose>
+</ol>

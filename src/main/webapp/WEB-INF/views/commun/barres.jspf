@@ -1,0 +1,18 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Graphique en barres horizontales. Avant l'include : <c:set var="barres" value="${liste de Barre}"/> --%>
+<c:choose>
+    <c:when test="${empty barres}">
+        <p class="gp-discret" style="margin:0">Pas encore de données.</p>
+    </c:when>
+    <c:otherwise>
+        <ul class="gp-barres">
+            <c:forEach var="b" items="${barres}">
+                <li>
+                    <span class="gp-barres-libelle"><c:out value="${b.libelle}"/></span>
+                    <span class="gp-barres-piste"><span style="width:${b.pourcentage}%"></span></span>
+                    <span class="gp-barres-valeur">${b.valeur}</span>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:otherwise>
+</c:choose>

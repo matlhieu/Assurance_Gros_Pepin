@@ -1,0 +1,22 @@
+<%@ page pageEncoding="UTF-8" %>
+<%-- Icône selon le type d'assurance. Avant l'include : <c:set var="nomType" value="..."/> --%>
+<c:choose>
+    <c:when test="${fn:containsIgnoreCase(nomType, 'auto')}">
+        <svg viewBox="0 0 24 24"><path d="M3 16.5v-3.2l2-5.6A2 2 0 0 1 6.9 6.3h10.2a2 2 0 0 1 1.9 1.4l2 5.6v3.2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM3.5 12.5h17M6 17.5v2M18 17.5v2M7 14.8h.01M17 14.8h.01"/></svg>
+    </c:when>
+    <c:when test="${fn:containsIgnoreCase(nomType, 'habit')}">
+        <svg viewBox="0 0 24 24"><path d="M3 11 12 3.5l9 7.5M5.5 9.3V20.5h13V9.3M10 20.5v-6h4v6"/></svg>
+    </c:when>
+    <c:when test="${fn:containsIgnoreCase(nomType, 'sant')}">
+        <svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-7.5-10.4A4.2 4.2 0 0 1 12 7.4a4.2 4.2 0 0 1 7.5 2.7c0 5.8-7.5 10.4-7.5 10.4zM12 10v5M9.5 12.5h5"/></svg>
+    </c:when>
+    <c:when test="${fn:containsIgnoreCase(nomType, 'voyage')}">
+        <svg viewBox="0 0 24 24"><path d="M21 3.5 3 10.8l7.2 2.6 2.6 7.1zM21 3.5 10.2 13.4"/></svg>
+    </c:when>
+    <c:when test="${fn:containsIgnoreCase(nomType, 'pro')}">
+        <svg viewBox="0 0 24 24"><path d="M3.5 8h17v11.5h-17zM9 8V5.5h6V8M3.5 13h17"/></svg>
+    </c:when>
+    <c:otherwise>
+        <svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v6c0 4.4 3.2 8.2 7.5 9 4.3-.8 7.5-4.6 7.5-9V6z"/></svg>
+    </c:otherwise>
+</c:choose>

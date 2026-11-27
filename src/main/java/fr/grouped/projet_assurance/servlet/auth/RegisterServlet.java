@@ -115,8 +115,8 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("utilisateur", utilisateur);
             session.setAttribute("role", utilisateur.getRole());
 
-            // Inscription réussie et connexion → rediriger vers l'accueil
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            // Inscription réussie : le client est connecté et arrive directement dans son espace
+            response.sendRedirect(request.getContextPath() + "/client/dashboard");
 
         } catch (IllegalArgumentException e) {
             // Email déjà utilisé, ou autre erreur métier
