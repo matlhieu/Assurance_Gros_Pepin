@@ -1863,3 +1863,11 @@ a.gp-contrat:hover {
         width: 100%;
     }
 }
+
+/* ---------- Badges de rôle (gestion des utilisateurs, /admin/utilisateurs) ---------- */
+.gp-statut-CLIENT { color: var(--gp-info); background: var(--gp-info-pale); }
+.gp-statut-AGENT { color: var(--gp-accent-fonce); background: var(--gp-accent-pale); }
+.gp-statut-ADMIN { color: var(--gp-erreur); background: var(--gp-erreur-pale); }
+
+.gp-lien-danger { color: var(--gp-erreur); }
+.gp-lien-danger:hover { text-decoration: underline; }
